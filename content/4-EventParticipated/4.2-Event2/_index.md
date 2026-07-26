@@ -1,126 +1,81 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-06-20
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+# Summary Report: "Cloud Architect Competition"
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+### Purpose of the Event
 
-### Event Objectives
+- Create a vibrant learning, competitive, and networking environment for members passionate about cloud computing.
+- Evaluate, reinforce, and expand practical knowledge of Cloud Computing and AWS ecosystem services.
+- Practice teamwork skills, architectural analytical thinking, and quick problem-solving reflection under time pressure.
+- Foster a proactive learning spirit and community networking among students sharing technical career paths.
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+### Competition Rules
 
-### Speakers
+- **Format:** Direct team-versus-team competition.
+- **Round Structure:** 
+  - Two teams take turns answering 10 questions with increasing difficulty levels from easy to hard.
+  - Topics center around core Cloud Computing concepts, AWS service ecosystems, and optimal system architecture design principles.
+  - The team with the higher total score advances to the next round.
+- **Tie-breaker / Sudden Death:** In the event of a tie score after the 10 main questions, a tie-breaker question is presented. The team that buzzes in fastest and answers correctly secures the final victory.
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+---
 
-### Key Highlights
+### Key Technical Focus Areas
 
-#### Identifying the drawbacks of legacy application architecture
+#### 1. Cloud Computing Overview & Core Infrastructure
+- Fundamental concepts of IaaS, PaaS, SaaS, and the AWS global infrastructure model (Regions, Availability Zones, Edge Locations).
+- Requirement analysis techniques to select appropriate deployment models (Public, Private, Hybrid Cloud).
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+#### 2. Architecture & Essential AWS Services
+- **Compute & Networking:** Applying and distinguishing between virtual servers (Amazon EC2), VPC, Subnets, Route Tables, Internet Gateways, and Security Groups.
+- **Storage & Database:** Key differences and optimal use cases for Amazon S3, EBS, EFS, as well as database engines like Amazon RDS and DynamoDB.
+- **Security & IAM:** Least privilege principle and the AWS Shared Responsibility Model.
 
-#### Transitioning to modern application architecture – Microservices
+#### 3. AWS Well-Architected Framework
+- Analyzing and designing system solutions that align with core pillars: Cost Optimization, Performance Efficiency, Reliability (Fault Tolerance & High Availability), Security, and Operational Excellence.
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+---
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+### Key Takeaways (Results Achieved)
 
-#### Domain-Driven Design (DDD)
+#### Reinforcement of Technical Knowledge
+- Systematized theoretical and practical knowledge regarding Cloud Computing and core AWS services.
+- Enhanced system architecture analytical thinking by solving real-world scenario-based competition questions.
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+#### Soft Skills & Quick Reflexes
+- **Teamwork Skills:** Practiced rapid communication, reaching consensus, and dividing analytical tasks effectively with teammates under time constraints.
+- **Reflexes & Critical Thinking:** Improved the speed of problem analysis, eliminating distractor options, and making accurate decisions quickly.
+- **Confidence:** Boosted self-confidence when discussing, presenting, and debating technical topics related to Cloud Computing.
 
-#### Event-Driven Architecture
+---
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+### Practical Applications
 
-#### Compute Evolution
+- **Application in Academic & Real Projects:** Utilizing standardized architectural design principles to build cost-effective and scalable Cloud infrastructures for course projects.
+- **Preparation for AWS Certifications:** Leveraging the question bank and scenarios from the competition as practical review materials for certification exams like AWS Certified Cloud Practitioner or AWS Certified Solutions Architect - Associate.
+- **Sustaining Community Learning:** Continuing to actively connect and learn from other event participants to drive mutual professional growth.
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
-
-### Key Takeaways
-
-#### Design Mindset
-
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
-
-#### Technical Architecture
-
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
-
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+---
 
 ### Event Experience
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+The **“Cloud Architect Competition”** delivered an energetic, intense, and highly educational atmosphere:
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+#### Competitive Spirit & Excitement
+- The competitive atmosphere between teams was dynamic and engaging. Intensity peaked during high-difficulty questions and reached a climax during the decisive tie-breaker question when teams were tied.
+- Experienced fast-paced thinking and seamless coordination with teammates to deliver accurate answers in short timeframes.
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+#### Networking & Knowledge Sharing
+- Had the opportunity to engage and exchange technical perspectives with many talented fellow students.
+- Learned valuable analytical shortcuts and unique approaches to architectural problems from opposing teams.
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
+#### Event Photo
+![Event](/images/4-Events/event2/6C7A6809.JPG)
 
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
-
-#### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+> Summary: The Cloud Architect Competition was not only an exciting intellectual arena but also a fantastic opportunity to solidify technical foundations, refine teamwork abilities, and gain further inspiration to pursue a career in Cloud and DevOps.

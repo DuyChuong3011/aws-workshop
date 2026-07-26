@@ -1,108 +1,182 @@
 ---
 title: "Bản đề xuất"
-date: 2024-01-01
+date: 2026-06-01
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-Tại phần này, bạn cần tóm tắt các nội dung trong workshop mà bạn **dự tính** sẽ làm.
 
-# IoT Weather Platform for Lab Research  
-## Giải pháp AWS Serverless hợp nhất cho giám sát thời tiết thời gian thực  
+# SCADA Fault Prediction Platform
+## Giải pháp dự đoán sự cố công nghiệp sử dụng Amazon SageMaker
 
-### 1. Tóm tắt điều hành  
-IoT Weather Platform được thiết kế dành cho nhóm *ITea Lab* tại TP. Hồ Chí Minh nhằm nâng cao khả năng thu thập và phân tích dữ liệu thời tiết. Nền tảng hỗ trợ tối đa 5 trạm thời tiết, có khả năng mở rộng lên 10–15 trạm, sử dụng thiết bị biên Raspberry Pi kết hợp cảm biến ESP32 để truyền dữ liệu qua MQTT. Nền tảng tận dụng các dịch vụ AWS Serverless để cung cấp giám sát thời gian thực, phân tích dự đoán và tiết kiệm chi phí, với quyền truy cập giới hạn cho 5 thành viên phòng lab thông qua Amazon Cognito.  
+### 1. Tóm tắt điều hành
 
-### 2. Tuyên bố vấn đề  
-*Vấn đề hiện tại*  
-Các trạm thời tiết hiện tại yêu cầu thu thập dữ liệu thủ công, khó quản lý khi có nhiều trạm. Không có hệ thống tập trung cho dữ liệu hoặc phân tích thời gian thực, và các nền tảng bên thứ ba thường tốn kém và quá phức tạp.  
+SCADA Fault Prediction Platform được xây dựng nhằm phát hiện và dự đoán sớm các sự cố thiết bị công nghiệp dựa trên dữ liệu cảm biến SCADA. Hệ thống sử dụng bộ dữ liệu công khai **SKAB (Skoltech Anomaly Benchmark)** kết hợp với các dịch vụ Machine Learning trên nền tảng AWS để tự động hóa toàn bộ quy trình từ tiền xử lý dữ liệu, xây dựng đặc trưng, huấn luyện mô hình, đánh giá, triển khai đến giám sát hệ thống.
 
-*Giải pháp*  
-Nền tảng sử dụng AWS IoT Core để tiếp nhận dữ liệu MQTT, AWS Lambda và API Gateway để xử lý, Amazon S3 để lưu trữ (bao gồm data lake), và AWS Glue Crawlers cùng các tác vụ ETL để trích xuất, chuyển đổi, tải dữ liệu từ S3 data lake sang một S3 bucket khác để phân tích. AWS Amplify với Next.js cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như Thingsboard và CoreIoT, người dùng có thể đăng ký thiết bị mới và quản lý kết nối, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích sử dụng nội bộ. Các tính năng chính bao gồm bảng điều khiển thời gian thực, phân tích xu hướng và chi phí vận hành thấp.  
+Giải pháp được phát triển chủ yếu trên Amazon SageMaker cùng các dịch vụ AWS liên quan, giúp sinh viên và nhóm nghiên cứu dễ dàng xây dựng hệ thống Predictive Maintenance có khả năng mở rộng mà không cần quản lý hạ tầng phức tạp. Hệ thống cung cấp API dự đoán theo thời gian thực và hỗ trợ giám sát trạng thái hoạt động của mô hình.
 
-*Lợi ích và hoàn vốn đầu tư (ROI)*  
-Giải pháp tạo nền tảng cơ bản để các thành viên phòng lab phát triển một nền tảng IoT lớn hơn, đồng thời cung cấp nguồn dữ liệu cho những người nghiên cứu AI phục vụ huấn luyện mô hình hoặc phân tích. Nền tảng giảm bớt báo cáo thủ công cho từng trạm thông qua hệ thống tập trung, đơn giản hóa quản lý và bảo trì, đồng thời cải thiện độ tin cậy dữ liệu. Chi phí hàng tháng ước tính 0,66 USD (theo AWS Pricing Calculator), tổng cộng 7,92 USD cho 12 tháng. Tất cả thiết bị IoT đã được trang bị từ hệ thống trạm thời tiết hiện tại, không phát sinh chi phí phát triển thêm. Thời gian hoàn vốn 6–12 tháng nhờ tiết kiệm đáng kể thời gian thao tác thủ công.  
+---
 
-### 3. Kiến trúc giải pháp  
-Nền tảng áp dụng kiến trúc AWS Serverless để quản lý dữ liệu từ 5 trạm dựa trên Raspberry Pi, có thể mở rộng lên 15 trạm. Dữ liệu được tiếp nhận qua AWS IoT Core, lưu trữ trong S3 data lake và xử lý bởi AWS Glue Crawlers và ETL jobs để chuyển đổi và tải vào một S3 bucket khác cho mục đích phân tích. Lambda và API Gateway xử lý bổ sung, trong khi Amplify với Next.js cung cấp bảng điều khiển được bảo mật bởi Cognito.  
+### 2. Tuyên bố vấn đề
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+#### Vấn đề hiện tại
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+Các hệ thống SCADA trong công nghiệp liên tục sinh ra lượng lớn dữ liệu cảm biến theo thời gian thực. Việc giám sát và phát hiện sự cố bằng phương pháp thủ công tốn nhiều thời gian, khó phát hiện các dấu hiệu bất thường trước khi thiết bị xảy ra hỏng hóc và không phù hợp với các hệ thống có quy mô lớn.
 
-*Dịch vụ AWS sử dụng*  
-- *AWS IoT Core*: Tiếp nhận dữ liệu MQTT từ 5 trạm, mở rộng lên 15.  
-- *AWS Lambda*: Xử lý dữ liệu và kích hoạt Glue jobs (2 hàm).  
-- *Amazon API Gateway*: Giao tiếp với ứng dụng web.  
-- *Amazon S3*: Lưu trữ dữ liệu thô (data lake) và dữ liệu đã xử lý (2 bucket).  
-- *AWS Glue*: Crawlers lập chỉ mục dữ liệu, ETL jobs chuyển đổi và tải dữ liệu.  
-- *AWS Amplify*: Lưu trữ giao diện web Next.js.  
-- *Amazon Cognito*: Quản lý quyền truy cập cho người dùng phòng lab.  
+Mặc dù Machine Learning có thể hỗ trợ bảo trì dự đoán hiệu quả, việc xây dựng một quy trình hoàn chỉnh từ xử lý dữ liệu đến triển khai mô hình thường yêu cầu nhiều hạ tầng và kinh nghiệm triển khai trên Cloud.
 
-*Thiết kế thành phần*  
-- *Thiết bị biên*: Raspberry Pi thu thập và lọc dữ liệu cảm biến, gửi tới IoT Core.  
-- *Tiếp nhận dữ liệu*: AWS IoT Core nhận tin nhắn MQTT từ thiết bị biên.  
-- *Lưu trữ dữ liệu*: Dữ liệu thô lưu trong S3 data lake; dữ liệu đã xử lý lưu ở một S3 bucket khác.  
-- *Xử lý dữ liệu*: AWS Glue Crawlers lập chỉ mục dữ liệu; ETL jobs chuyển đổi để phân tích.  
-- *Giao diện web*: AWS Amplify lưu trữ ứng dụng Next.js cho bảng điều khiển và phân tích thời gian thực.  
-- *Quản lý người dùng*: Amazon Cognito giới hạn 5 tài khoản hoạt động.  
+#### Giải pháp
 
-### 4. Triển khai kỹ thuật  
-*Các giai đoạn triển khai*  
-Dự án gồm 2 phần — thiết lập trạm thời tiết biên và xây dựng nền tảng thời tiết — mỗi phần trải qua 4 giai đoạn:  
-1. *Nghiên cứu và vẽ kiến trúc*: Nghiên cứu Raspberry Pi với cảm biến ESP32 và thiết kế kiến trúc AWS Serverless (1 tháng trước kỳ thực tập).  
-2. *Tính toán chi phí và kiểm tra tính khả thi*: Sử dụng AWS Pricing Calculator để ước tính và điều chỉnh (Tháng 1).  
-3. *Điều chỉnh kiến trúc để tối ưu chi phí/giải pháp*: Tinh chỉnh (ví dụ tối ưu Lambda với Next.js) để đảm bảo hiệu quả (Tháng 2).  
-4. *Phát triển, kiểm thử, triển khai*: Lập trình Raspberry Pi, AWS services với CDK/SDK và ứng dụng Next.js, sau đó kiểm thử và đưa vào vận hành (Tháng 2–3).  
+Hệ thống sử dụng Amazon S3 để lưu trữ dữ liệu SCADA, SageMaker Processing Jobs để tiền xử lý và xây dựng đặc trưng, sau đó huấn luyện nhiều mô hình như XGBoost, Isolation Forest và LSTM bằng SageMaker Training Jobs. Hyperparameter Optimization được sử dụng để tự động tìm bộ tham số tối ưu.
 
-*Yêu cầu kỹ thuật*  
-- *Trạm thời tiết biên*: Cảm biến (nhiệt độ, độ ẩm, lượng mưa, tốc độ gió), vi điều khiển ESP32, Raspberry Pi làm thiết bị biên. Raspberry Pi chạy Raspbian, sử dụng Docker để lọc dữ liệu và gửi 1 MB/ngày/trạm qua MQTT qua Wi-Fi.  
-- *Nền tảng thời tiết*: Kiến thức thực tế về AWS Amplify (lưu trữ Next.js), Lambda (giảm thiểu do Next.js xử lý), AWS Glue (ETL), S3 (2 bucket), IoT Core (gateway và rules), và Cognito (5 người dùng). Sử dụng AWS CDK/SDK để lập trình (ví dụ IoT Core rules tới S3). Next.js giúp giảm tải Lambda cho ứng dụng web fullstack.  
+Sau khi lựa chọn được mô hình tốt nhất, hệ thống đăng ký mô hình vào SageMaker Model Registry và triển khai thành SageMaker Endpoint. AWS Lambda kết hợp Amazon API Gateway cung cấp REST API cho việc dự đoán thời gian thực, trong khi Amazon CloudWatch và Amazon SNS đảm nhiệm việc giám sát và gửi cảnh báo khi phát hiện bất thường.
 
-### 5. Lộ trình & Mốc triển khai  
-- *Trước thực tập (Tháng 0)*: 1 tháng lên kế hoạch và đánh giá trạm cũ.  
-- *Thực tập (Tháng 1–3)*:  
-    - Tháng 1: Học AWS và nâng cấp phần cứng.  
-    - Tháng 2: Thiết kế và điều chỉnh kiến trúc.  
-    - Tháng 3: Triển khai, kiểm thử, đưa vào sử dụng.  
-- *Sau triển khai*: Nghiên cứu thêm trong vòng 1 năm.  
+#### Lợi ích và hiệu quả mang lại
 
-### 6. Ước tính ngân sách  
-Có thể xem chi phí trên [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01)  
-Hoặc tải [tệp ước tính ngân sách](../attachments/budget_estimation.pdf).  
+Giải pháp giúp sinh viên và nhóm nghiên cứu tiếp cận đầy đủ quy trình xây dựng một hệ thống Machine Learning trên AWS theo hướng MLOps. Toàn bộ quá trình xử lý dữ liệu, huấn luyện, đánh giá và triển khai được tự động hóa, giảm đáng kể công sức triển khai thủ công.
 
-*Chi phí hạ tầng*  
-- AWS Lambda: 0,00 USD/tháng (1.000 request, 512 MB lưu trữ).  
-- S3 Standard: 0,15 USD/tháng (6 GB, 2.100 request, 1 GB quét).  
-- Truyền dữ liệu: 0,02 USD/tháng (1 GB vào, 1 GB ra).  
-- AWS Amplify: 0,35 USD/tháng (256 MB, request 500 ms).  
-- Amazon API Gateway: 0,01 USD/tháng (2.000 request).  
-- AWS Glue ETL Jobs: 0,02 USD/tháng (2 DPU).  
-- AWS Glue Crawlers: 0,07 USD/tháng (1 crawler).  
-- MQTT (IoT Core): 0,08 USD/tháng (5 thiết bị, 45.000 tin nhắn).  
+Ngoài ra, nền tảng còn tạo ra một kiến trúc có thể tái sử dụng cho các bài toán Predictive Maintenance trong tương lai. Do sử dụng bộ dữ liệu công khai SKAB nên không phát sinh chi phí thu thập dữ liệu, đồng thời có thể tận dụng AWS Academy Credits hoặc AWS Free Tier để giảm chi phí triển khai.
 
-*Tổng*: 0,7 USD/tháng, 8,40 USD/12 tháng  
-- *Phần cứng*: 265 USD một lần (Raspberry Pi 5 và cảm biến).  
+---
 
-### 7. Đánh giá rủi ro  
-*Ma trận rủi ro*  
-- Mất mạng: Ảnh hưởng trung bình, xác suất trung bình.  
-- Hỏng cảm biến: Ảnh hưởng cao, xác suất thấp.  
-- Vượt ngân sách: Ảnh hưởng trung bình, xác suất thấp.  
+### 3. Kiến trúc giải pháp
 
-*Chiến lược giảm thiểu*  
-- Mạng: Lưu trữ cục bộ trên Raspberry Pi với Docker.  
-- Cảm biến: Kiểm tra định kỳ, dự phòng linh kiện.  
-- Chi phí: Cảnh báo ngân sách AWS, tối ưu dịch vụ.  
+Hệ thống được xây dựng theo kiến trúc Machine Learning hoàn chỉnh trên AWS. Dữ liệu SCADA được lưu trữ trong Amazon S3, sau đó được xử lý bằng SageMaker Processing Jobs và Feature Engineering trước khi huấn luyện các mô hình Machine Learning. Mô hình có kết quả tốt nhất sẽ được đăng ký trong Model Registry và triển khai thành SageMaker Endpoint để phục vụ dự đoán trực tuyến. AWS Lambda và API Gateway cung cấp REST API, trong khi CloudWatch và SNS đảm nhiệm việc giám sát và gửi cảnh báo.
 
-*Kế hoạch dự phòng*  
-- Quay lại thu thập thủ công nếu AWS gặp sự cố.  
-- Sử dụng CloudFormation để khôi phục cấu hình liên quan đến chi phí.  
+![SCADA System Architecture](/images/2-Proposal/scada_architecture.png)
 
-### 8. Kết quả kỳ vọng  
-*Cải tiến kỹ thuật*: Dữ liệu và phân tích thời gian thực thay thế quy trình thủ công. Có thể mở rộng tới 10–15 trạm.  
-*Giá trị dài hạn*: Nền tảng dữ liệu 1 năm cho nghiên cứu AI, có thể tái sử dụng cho các dự án tương lai.
+### Dịch vụ AWS sử dụng
+
+- **Amazon S3**: Lưu trữ dữ liệu gốc, dữ liệu đã xử lý và đặc trưng.
+- **Amazon SageMaker Processing**: Tiền xử lý dữ liệu và Feature Engineering.
+- **Amazon SageMaker Training**: Huấn luyện các mô hình Machine Learning.
+- **Amazon SageMaker Experiments**: Theo dõi các lần huấn luyện.
+- **Amazon SageMaker Hyperparameter Optimization**: Tối ưu tham số mô hình.
+- **Amazon SageMaker Model Registry**: Quản lý phiên bản mô hình.
+- **Amazon SageMaker Endpoint**: Cung cấp dịch vụ dự đoán thời gian thực.
+- **AWS Lambda**: Xử lý các yêu cầu dự đoán.
+- **Amazon API Gateway**: Cung cấp REST API.
+- **Amazon CloudWatch**: Giám sát hiệu năng hệ thống.
+- **Amazon SNS**: Gửi cảnh báo khi phát hiện lỗi.
+
+### Thiết kế thành phần
+
+- **Lớp dữ liệu**: Bộ dữ liệu SKAB được lưu trên Amazon S3.
+- **Xử lý dữ liệu**: SageMaker Processing thực hiện tiền xử lý và xây dựng đặc trưng.
+- **Huấn luyện mô hình**: SageMaker Training huấn luyện XGBoost, Isolation Forest và LSTM, kết hợp HPO để tối ưu tham số.
+- **Triển khai mô hình**: Mô hình tốt nhất được đăng ký vào Model Registry và triển khai thành SageMaker Endpoint.
+- **API dự đoán**: Lambda và API Gateway cung cấp giao diện REST API cho người dùng.
+- **Giám sát hệ thống**: CloudWatch theo dõi hiệu năng, SNS gửi cảnh báo khi xảy ra bất thường.
+
+---
+
+### 4. Triển khai kỹ thuật
+
+#### Các giai đoạn triển khai
+
+Dự án được chia thành bốn giai đoạn chính:
+
+1. **Chuẩn bị dữ liệu:** Thu thập bộ dữ liệu SKAB, thực hiện EDA và tiền xử lý dữ liệu.
+2. **Xây dựng đặc trưng:** Tạo các đặc trưng Rolling Statistics, Z-score, Difference và chuẩn hóa dữ liệu.
+3. **Huấn luyện mô hình:** Huấn luyện và so sánh XGBoost, Isolation Forest và LSTM dựa trên F1 Score và AUC-ROC.
+4. **Triển khai và giám sát:** Triển khai SageMaker Endpoint, xây dựng Lambda, API Gateway, CloudWatch, SNS và SageMaker Pipeline.
+
+#### Yêu cầu kỹ thuật
+
+**Môi trường phát triển**
+
+- Python 3.10 trở lên
+- Jupyter Notebook
+- Pandas
+- NumPy
+- Scikit-learn
+- TensorFlow
+- PyTorch
+- XGBoost
+
+**Dịch vụ AWS**
+
+- Amazon S3
+- Amazon SageMaker
+- AWS Lambda
+- Amazon API Gateway
+- Amazon CloudWatch
+- Amazon SNS
+- AWS IAM
+
+---
+
+### 5. Lộ trình & Mốc triển khai
+
+- **Tuần 1:** Chuẩn bị bộ dữ liệu, cấu hình môi trường AWS và thực hiện EDA.
+- **Tuần 2:** Tiền xử lý dữ liệu và Feature Engineering.
+- **Tuần 3:** Huấn luyện mô hình trên môi trường Local.
+- **Tuần 4:** Triển khai SageMaker Processing và Training Jobs.
+- **Tuần 5:** Hyperparameter Optimization và Model Registry.
+- **Tuần 6:** Triển khai SageMaker Endpoint và xây dựng REST API.
+- **Tuần 7:** Tích hợp SageMaker Pipeline và kiểm thử toàn bộ hệ thống.
+- **Tuần 8:** Hoàn thiện tài liệu, kiểm thử cuối cùng và trình bày dự án.
+
+---
+
+### 6. Ước tính ngân sách
+
+Chi phí hạ tầng chủ yếu đến từ các dịch vụ AWS:
+
+- Amazon S3
+- Amazon SageMaker Processing
+- Amazon SageMaker Training
+- Amazon SageMaker Endpoint
+- AWS Lambda
+- Amazon API Gateway
+- Amazon CloudWatch
+- Amazon SNS
+
+Dự án hướng đến mục đích học tập và nghiên cứu nên có thể sử dụng AWS Academy Credits hoặc AWS Free Tier để giảm đáng kể chi phí triển khai. SageMaker Endpoint sẽ được tắt ngay sau khi hoàn thành việc kiểm thử hoặc trình diễn nhằm tối ưu chi phí vận hành.
+
+**Chi phí phần cứng**
+
+- Không phát sinh chi phí phần cứng do sử dụng bộ dữ liệu công khai SKAB thay vì thu thập dữ liệu trực tiếp từ thiết bị SCADA.
+
+---
+
+### 7. Đánh giá rủi ro
+
+#### Ma trận rủi ro
+
+- Độ chính xác mô hình chưa đạt yêu cầu: Ảnh hưởng cao, xác suất trung bình.
+- Chất lượng dữ liệu không tốt: Ảnh hưởng cao, xác suất trung bình.
+- Gián đoạn dịch vụ AWS: Ảnh hưởng trung bình, xác suất thấp.
+- Chi phí Cloud vượt dự kiến: Ảnh hưởng trung bình, xác suất thấp.
+
+#### Chiến lược giảm thiểu
+
+- Thực hiện tiền xử lý và Feature Engineering đầy đủ.
+- Sử dụng Hyperparameter Optimization để cải thiện hiệu suất mô hình.
+- Giám sát bằng Amazon CloudWatch và thiết lập AWS Budget Alerts.
+- Tắt SageMaker Endpoint sau khi kiểm thử để giảm chi phí.
+
+#### Kế hoạch dự phòng
+
+- Tiếp tục huấn luyện và đánh giá mô hình trên môi trường Local khi không thể sử dụng tài nguyên AWS.
+- Triển khai lại phiên bản mô hình đã được phê duyệt từ SageMaker Model Registry khi xảy ra lỗi.
+- Khôi phục phiên bản Pipeline trước đó nếu phiên bản mới làm giảm chất lượng dự đoán.
+
+---
+
+### 8. Kết quả kỳ vọng
+
+#### Cải tiến kỹ thuật
+
+- Tự động hóa toàn bộ quy trình Machine Learning trên AWS.
+- Dự đoán sự cố thiết bị công nghiệp theo thời gian thực.
+- Cung cấp REST API phục vụ dự đoán trực tuyến.
+- Tự động triển khai và quản lý vòng đời mô hình.
+- Xây dựng quy trình MLOps có thể tái sử dụng.
+
+#### Giá trị dài hạn
+
+- Tạo nền tảng nghiên cứu về Predictive Maintenance và Industrial AI.
+- Giúp sinh viên tiếp cận quy trình triển khai Machine Learning trên AWS.
+- Có thể mở rộng để áp dụng cho các hệ thống SCADA thực tế và các dự án công nghiệp trong tương lai.
