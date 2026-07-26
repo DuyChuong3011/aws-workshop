@@ -1,57 +1,34 @@
 ---
 title: "Week 1 Worklog"
-date: 2024-01-01
+date: 2026-05-31
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+### Weekly Objectives:
 
-### Week 1 Objectives:
+* Grasp the overall business context of the anomaly detection problem for Wind Turbines using industrial SCADA data.
+* Familiarize with the Amazon Web Services (AWS) cloud computing ecosystem, specifically focusing on fundamental storage, computing, and identity access management services.
+* Successfully configure the local development environment and establish a secure programmatic API connection to the cloud account.
+* Conceptualize and architect the blueprint for the Hybrid Machine Learning system (Local-Hybrid MLOps Workflow).
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+### Tasks Implemented This Week:
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Tasks | Start Date | End Date | References |
+| :--- | :--- | :--- | :--- | :--- |
+| Mon | - **Business and Data Analysis:**<br>&emsp; + Survey project documentation and the raw SCADA datasets (`T1_train.csv`, `T1_test.csv`).<br>&emsp; + Analyze the structural specifications of the time-series data, identifying core features such as Wind Speed and LV ActivePower. <br>&emsp; + Unify the technical approach: Utilize Unsupervised Learning models to detect sensor faults or mechanical performance degradation. | 01/06/2026 | 01/06/2026 | <https://www.kaggle.com/code/aliakbaryaghoubi/wind-turbine-status-classification-via-power-curve> |
+| Tue | - **MLOps System Architecture Research:** <br>&emsp; + Investigate the standard lifecycle of an MLOps pipeline: Data Engineering → Training → Evaluation → Model Registry. <br>&emsp; + Finalize the Local-Hybrid architecture strategy: Execute data processing and preprocessing locally, and leverage the AWS cloud to offload Training Jobs, optimizing costs while bypassing personal hardware limitations. | 02/06/2026 | 02/06/2026 | <https://aws.amazon.com/sagemaker/mlops/> |
+| Wed | - **AWS Account Initialization & Configuration:** <br>&emsp; + Install the AWS Command Line Interface (CLI) on the local workstation. <br>&emsp; + **Hands-on Practice:** Utilize the `aws configure` command to securely map credentials via Access Key ID and Secret Access Key, setting the default region to `ap-southeast-1` (Singapore). | 03/06/2026 | 03/06/2026 | <https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html> |
+| Thu | - **Security and Access Management (AWS IAM):** <br>&emsp; + Explore core IAM concepts including Users, Groups, Policies, and Roles, strictly applying the Principle of Least Privilege. | 04/06/2026 | 04/06/2026 | <https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html> |
+| Fri | - **Cloud Storage Infrastructure Setup (Amazon S3):** <br>&emsp; + Research AWS Object Storage (Amazon S3) and evaluate its structural advantages over Block Storage (EBS) for handling Machine Learning Data Lakes. <br>&emsp; + **Hands-on Practice:** Access the AWS Management Console to provision a Globally Unique S3 Bucket. Establish a baseline Data Lake directory hierarchy, preparing the infrastructure for automated data and source code ingestion in the upcoming weeks. | 05/06/2026 | 05/06/2026 | <https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html> |
 
+### Results Achieved in Week 1:
 
-### Week 1 Achievements:
-
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+*   **Business Knowledge Mastery:** Gained a deep understanding of the time-series nature of industrial SCADA systems. Successfully defined the core objective of the Anomaly Detection problem for Wind Turbines, establishing a solid theoretical foundation for the subsequent feature engineering phase.
+*   **Cloud Infrastructure Proficiency:** Mastered the fundamental concepts of AWS cloud computing, particularly the core services that act as the backbone of this project: Amazon S3 (Unstructured Object Storage), AWS IAM (Identity & Access Control), and the automated cloud computing provisioning model.
+*   **Successful Environment Setup:** 
+    *   Configured the AWS CLI on the local machine flawlessly. Environment variables and Credentials are securely managed, guaranteeing seamless, uninterrupted two-way API communication between the local workstation and the AWS Cloud.
+*   **Cloud Practice & Preliminary Troubleshooting:** 
+    *   Successfully initialized the Amazon S3 Bucket. This serves as a critical architectural milestone, enabling the automation of data ingestion pipelines (via Python Boto3) into the Data Lake next week.
+*   **Systems Engineering Mindset:** Clearly mapped out the Local-Hybrid MLOps Workflow. Solidified the architectural justification for offloading resource-heavy computations (Model Training) to Amazon SageMaker rather than executing them locally a decision that demonstrates a strong grasp of FinOps (cost optimization) and scalable engineering practices.

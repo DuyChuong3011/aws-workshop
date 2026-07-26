@@ -1,57 +1,29 @@
 ---
 title: "Week 4 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-06-21
+weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+### Weekly Objectives:
 
-### Week 4 Objectives:
+* Construct a pseudo-labeling database based on the deviation between the Actual Power and Theoretical Power of the wind turbine.
+* Establish objective statistical thresholds to classify the boundary between Normal (0) and Anomalous (1) operational states.
+* Generate a small-scale Ground Truth dataset to serve as an evaluation metric for Unsupervised Learning models in subsequent phases.
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+### Tasks Implemented This Week:
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Tasks | Start Date | End Date | References |
+| :--- | :--- | :--- | :--- | :--- |
+| Mon | - **Residual Calculation:**<br>&emsp; + Apply the Power Curve equation interpolated from Week 2 to calculate the expected Theoretical Power for each Wind Speed level.<br>&emsp; + Subtract the Theoretical Power from the Actual Power to obtain the residual array for each data point. | 22/06/2026 | 22/06/2026 | <https://numpy.org/doc/stable/reference/generated/numpy.subtract.html> |
+| Tue | - **Statistical Thresholding:** <br>&emsp; + Analyze the distribution of the residual dataset. <br>&emsp; + Apply the Interquartile Range (IQR) method to determine the Upper Control Limit (UCL) and Lower Control Limit (LCL), isolating data points that fall outside the system's normal variance. | 23/06/2026 | 23/06/2026 | <https://docs.scipy.org/doc/scipy/reference/stats.html> |
+| Wed | - **Pseudo-labeling Implementation:** <br>&emsp; + Program a mapping function utilizing Pandas. <br>&emsp; + Assign label `1` (Anomaly) to data points with residuals exceeding the control limits, and label `0` (Normal) to points within the safe operational margin. | 24/06/2026 | 24/06/2026 | <https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html> |
+| Thu | - **Sanity Check Visualization:** <br>&emsp; + Reconstruct the scatter plot of Wind Speed versus Actual Power. <br>&emsp; + Color-code the plot to differentiate between label `0` and `1`, visually verifying whether the physical rules align with the actual clustering state. | 25/06/2026 | 25/06/2026 | <https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html> |
+| Fri | - **Label Integration:** <br>&emsp; + Directly integrate the pseudo-label array as a new feature into the current in-memory DataFrame structure for the upcoming pipeline. <br>&emsp; + Evaluate the class distribution to quantify the degree of data imbalance. | 26/06/2026 | 26/06/2026 | |
 
+### Results Achieved in Week 4:
 
-### Week 4 Achievements:
-
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+*   **Baseline Labeling Construction:** Successfully resolved the core obstacle of industrial SCADA data: the lack of labels (unlabeled data). By standardizing physical residuals into binary labels, the project has established a benchmark dataset for model evaluation.
+*   **Statistical & Mathematical Basis:** The application of the Interquartile Range (IQR) method on the residual distribution provides a non-parametric evaluation technique to identify outliers. This technique establishes control thresholds based on actual data dispersion, mitigating reliance on normal distribution assumptions, thereby quantifying the boundary between natural power fluctuations and abnormal equipment states.
+*   **Benchmarking Establishment:** Provided a quantifiable reference frame. This pseudo-label dataset acts as the foundational "Ground Truth," enabling direct measurement of accuracy metrics (Precision, Recall, F1-Score) for clustering algorithms in upcoming weeks, thoroughly overcoming the non-quantifiable weakness of traditional Unsupervised Learning pipelines.
