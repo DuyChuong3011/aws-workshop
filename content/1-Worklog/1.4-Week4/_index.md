@@ -1,29 +1,31 @@
 ---
 title: "Week 4 Worklog"
-date: 2026-06-21
+date: 2026-06-22
 weight: 4
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
 
-### Weekly Objectives:
+### Week 4 Objectives:
 
-* Construct a pseudo-labeling database based on the deviation between the Actual Power and Theoretical Power of the wind turbine.
-* Establish objective statistical thresholds to classify the boundary between Normal (0) and Anomalous (1) operational states.
-* Generate a small-scale Ground Truth dataset to serve as an evaluation metric for Unsupervised Learning models in subsequent phases.
+* Program an automation script to launch the model training process on the Amazon SageMaker cloud using Python.
 
-### Tasks Implemented This Week:
+* Connect the local training source code (`src/train.py`) with the S3 data repository and cloud compute servers.
 
-| Day | Tasks | Start Date | End Date | References |
-| :--- | :--- | :--- | :--- | :--- |
-| Mon | - **Residual Calculation:**<br>&emsp; + Apply the Power Curve equation interpolated from Week 2 to calculate the expected Theoretical Power for each Wind Speed level.<br>&emsp; + Subtract the Theoretical Power from the Actual Power to obtain the residual array for each data point. | 22/06/2026 | 22/06/2026 | <https://numpy.org/doc/stable/reference/generated/numpy.subtract.html> |
-| Tue | - **Statistical Thresholding:** <br>&emsp; + Analyze the distribution of the residual dataset. <br>&emsp; + Apply the Interquartile Range (IQR) method to determine the Upper Control Limit (UCL) and Lower Control Limit (LCL), isolating data points that fall outside the system's normal variance. | 23/06/2026 | 23/06/2026 | <https://docs.scipy.org/doc/scipy/reference/stats.html> |
-| Wed | - **Pseudo-labeling Implementation:** <br>&emsp; + Program a mapping function utilizing Pandas. <br>&emsp; + Assign label `1` (Anomaly) to data points with residuals exceeding the control limits, and label `0` (Normal) to points within the safe operational margin. | 24/06/2026 | 24/06/2026 | <https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html> |
-| Thu | - **Sanity Check Visualization:** <br>&emsp; + Reconstruct the scatter plot of Wind Speed versus Actual Power. <br>&emsp; + Color-code the plot to differentiate between label `0` and `1`, visually verifying whether the physical rules align with the actual clustering state. | 25/06/2026 | 25/06/2026 | <https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html> |
-| Fri | - **Label Integration:** <br>&emsp; + Directly integrate the pseudo-label array as a new feature into the current in-memory DataFrame structure for the upcoming pipeline. <br>&emsp; + Evaluate the class distribution to quantify the degree of data imbalance. | 26/06/2026 | 26/06/2026 | |
+### Tasks to be implemented this week:
 
-### Results Achieved in Week 4:
+| Day | Tasks | Start Date | End Date | Resources |
+| --- | ----- | ---------- | -------- | --------- |
+| Mon | - Create the `aws/training_job.py` file. <br> - Configure the XGBoost Estimator object via the SageMaker SDK with the instance type as `ml.m5.large` and specify the IAM Role. | 22/06/2026 | 22/06/2026 | <https://sagemaker.readthedocs.io/en/stable/> |
+| Tue | - Configure the output path on Amazon S3 so the system automatically stores the model artifact after the training process finishes. | 23/06/2026 | 23/06/2026 | <https://boto3.amazonaws.com/v1/documentation/api/latest/index.html> |
+| Wed | - Define the initial default list of hyperparameters passed to the XGBoost model. | 24/06/2026 | 24/06/2026 | <https://xgboost.readthedocs.io/en/stable/parameter.html> |
+| Thu | - Set up the input data channels: Define and point the data reading stream for the `train` and `validation` sets directly from Amazon S3 into the Estimator. | 25/06/2026 | 25/06/2026 | <https://docs.aws.amazon.com/sagemaker/latest/dg/modeltrain-datatypes.html> |
+| Fri | - **Practice:** <br>&emsp; + Call the `estimator.fit()` function to trigger the Training Job process on AWS. <br>&emsp; + Program the command to print the Job name and the S3 path of the model artifact to the terminal after the job runs successfully. | 26/06/2026 | 26/06/2026 | <https://docs.aws.amazon.com/sagemaker/> |
 
-*   **Baseline Labeling Construction:** Successfully resolved the core obstacle of industrial SCADA data: the lack of labels (unlabeled data). By standardizing physical residuals into binary labels, the project has established a benchmark dataset for model evaluation.
-*   **Statistical & Mathematical Basis:** The application of the Interquartile Range (IQR) method on the residual distribution provides a non-parametric evaluation technique to identify outliers. This technique establishes control thresholds based on actual data dispersion, mitigating reliance on normal distribution assumptions, thereby quantifying the boundary between natural power fluctuations and abnormal equipment states.
-*   **Benchmarking Establishment:** Provided a quantifiable reference frame. This pseudo-label dataset acts as the foundational "Ground Truth," enabling direct measurement of accuracy metrics (Precision, Recall, F1-Score) for clustering algorithms in upcoming weeks, thoroughly overcoming the non-quantifiable weakness of traditional Unsupervised Learning pipelines.
+### Week 4 Achievements:
+
+* Completed the Python script (`aws/training_job.py`), allowing automatic initialization and execution of the Training Job entirely via code, eliminating the need for manual operations on the AWS Console.
+
+* Successfully integrated the data exchange flow: SageMaker fetches data from S3, executes the `src/train.py` file on the cloud server, and stores the results (model artifact) back to S3.
+
+* Finalized the independent testing environment on the cloud, establishing a solid foundation for deploying the automated Hyperparameter Optimization (HPO) system.

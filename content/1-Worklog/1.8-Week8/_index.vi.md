@@ -1,59 +1,30 @@
 ---
 title: "Worklog Tuần 8"
-date: 2024-01-01
-weight: 1
+date: 2026-07-20
+weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 8:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Phân tích, tổng hợp đánh giá hiệu năng mô hình lần cuối phục vụ cho báo cáo tổng kết.
+* Bàn giao phiên bản mô hình trên Model Registry và dọn dẹp tài nguyên để tối ưu chi phí đám mây.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | --------- | ------------ | --------------- | -------------- |
+| 2   | - Trích xuất toàn bộ biểu đồ hiệu năng, log huấn luyện từ SageMaker và CloudWatch. <br> - Định dạng lại các biểu đồ ROC, Confusion Matrix phục vụ cho báo cáo. | 20/07/2026 | 20/07/2026 | <https://docs.aws.amazon.com/cloudwatch/> |
+| 3   | - Viết tài liệu kỹ thuật mô tả chi tiết: <br>&emsp; + Kiến trúc mô hình XGBoost. <br>&emsp; + Các siêu tham số tối ưu đã chọn. <br>&emsp; + Luồng xử lý dữ liệu trong script huấn luyện. | 21/07/2026 | 21/07/2026 | |
+| 4   | - Phối hợp bàn giao phiên bản mô hình. <br>&emsp; + Thống nhất chuẩn đầu vào/đầu ra của mô hình. <br>&emsp; + Giải thích cách trigger pipeline CI/CD từ trạng thái `PendingManualApproval`. | 22/07/2026 | 22/07/2026 | <https://docs.aws.amazon.com/whitepapers/latest/mlops-framework/> |
+| 5   | - Rà soát toàn bộ tài khoản AWS cá nhân. <br> - Xóa/Tắt các Notebook Instances, S3 buckets nháp, và các Training Jobs không còn sử dụng để tránh phát sinh chi phí. | 23/07/2026 | 23/07/2026 | <https://aws.amazon.com/aws-cost-management/> |
+| 6   | - **Thực hành:** <br>&emsp; + Hoàn thiện báo cáo thực tập phần ML Engineering. <br>&emsp; + Cùng nhóm review chéo lại toàn bộ tiến trình 8 tuần vừa qua. | 24/07/2026 | 24/07/2026 | |
 
 ### Kết quả đạt được tuần 8:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Bàn giao thành công phiên bản mô hình XGBoost hoàn chỉnh, sẵn sàng cho khâu kiểm duyệt và triển khai tự động.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Giải phóng hoàn toàn các tài nguyên thử nghiệm trên AWS, đảm bảo tuân thủ tiêu chuẩn quản lý chi phí của dự án.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Hoàn tất toàn bộ tài liệu kỹ thuật và báo cáo thực tập đúng thời hạn, khép lại quy trình 8 tuần thực tập ở vai trò ML Engineer.
