@@ -23,13 +23,13 @@ chapter: false
 
 &emsp; **Major:** Computer Engineering
 
-<!-- &emsp; **Class:** AWS082025 -->
+&emsp; **Class:** MT23KTM1
 
 &emsp; **Internship Company:** Amazon Web Services Viet Nam Company Limited
 
 &emsp; **Internship Position:** Workforce Bootcamp - First Cloud AI Journey
 
-&emsp; **Internship Duration:** From 01/06/2026 to 12/8/2026
+&emsp; **Internship Duration:** From 01/06/2026 to 14/8/2026
 
 ![Your profile picture](/images/avatar.png)
 
@@ -42,3 +42,4 @@ chapter: false
 5.  [Workshop](5-Workshop/)
 6.  [Self-evaluation](6-Self-evaluation/)
 7.  [Sharing and Feedback](7-Feedback/)
+8.  [Link Github Project](8-Github/)

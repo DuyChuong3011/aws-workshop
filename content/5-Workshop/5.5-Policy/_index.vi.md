@@ -1,95 +1,46 @@
 ---
-title : "VPC Endpoint Policies"
-date : 2024-01-01
+title : "Thiết lập IAM Policy"
+date :  2026-07-30 
 weight : 5
 chapter : false
 pre : " <b> 5.5 </b> "
 ---
 
-Khi bạn tạo một Interface Endpoint  hoặc cổng, bạn có thể đính kèm một chính sách điểm cuối để kiểm soát quyền truy cập vào dịch vụ mà bạn đang kết nối. Chính sách VPC Endpoint là chính sách tài nguyên IAM mà bạn đính kèm vào điểm cuối. Nếu bạn không đính kèm chính sách khi tạo điểm cuối, thì AWS sẽ đính kèm chính sách mặc định cho bạn để cho phép toàn quyền truy cập vào dịch vụ thông qua điểm cuối.
+### Phân quyền an toàn với AWS IAM
 
-Bạn có thể tạo chính sách chỉ hạn chế quyền truy cập vào các S3 bucket cụ thể. Điều này hữu ích nếu bạn chỉ muốn một số Bộ chứa S3 nhất định có thể truy cập được thông qua điểm cuối.
+Trong AWS, các dịch vụ không tự động có quyền truy cập vào nhau nhằm đảm bảo tính bảo mật. Để Amazon SageMaker có thể tự động kéo dữ liệu SCADA từ S3, ghi lại logs quá trình huấn luyện và đăng ký mô hình vào Model Registry, nó cần một danh tính định danh an toàn. 
 
-Trong phần này, bạn sẽ tạo chính sách VPC Endpoint hạn chế quyền truy cập vào S3 bucket được chỉ định trong chính sách VPC Endpoint.
+Bài thực hành này hướng dẫn bạn tạo một **IAM Execution Role** cho SageMaker dựa trên nguyên tắc đặc quyền tối thiểu.
 
-![endpoint diagram](/images/5-Workshop/5.5-Policy/s3-bucket-policy.png)
+---
 
-#### Kết nối tới EC2 và xác minh kết nối tới S3. 
+### Các bước tạo SageMaker Execution Role
 
-1. Bắt đầu một phiên AWS Session Manager mới trên máy chủ có tên là Test-Gateway-Endpoint. Từ phiên này, xác minh rằng bạn có thể liệt kê nội dung của bucket mà bạn đã tạo trong Phần 1: Truy cập S3 từ VPC.
+1. Đăng nhập vào **AWS Management Console**, tìm kiếm và mở dịch vụ **IAM (Identity and Access Management)**.
+2. Ở thanh menu bên trái, chọn **Roles** và nhấn nút **Create role** (Tạo vai trò mới).
+3. **Select trusted entity (Chọn thực thể tin cậy):**
+   * Trusted entity type: Chọn **AWS service**.
+   * Use case: Tìm kiếm trong danh sách và chọn **SageMaker**, sau đó tiếp tục chọn **SageMaker - Execution** ở mục tùy chọn thả xuống.
+   * Nhấn **Next**.
+4. **Add permissions (Thêm quyền hạn):**
+   * AWS sẽ tự động đính kèm policy `AmazonSageMakerFullAccess`.
+   * Vì SageMaker cần đọc/ghi dữ liệu vào Data Lake, bạn cần cấp thêm quyền truy cập S3. Tìm kiếm từ khóa `S3` và đánh dấu tích vào policy `AmazonS3FullAccess`.
+   * *(Lưu ý: Trong môi trường doanh nghiệp khắt khe, bạn không nên dùng quyền FullAccess mà nên tự viết một Custom Policy chỉ cấp quyền Read/Write đúng vào tên bucket `scada-mlops-project-bucket-2026` của dự án)*.
+   * Nhấn **Next**.
+5. **Name, review, and create:**
+   * **Role name:** Đặt tên gợi nhớ cho dự án, ví dụ: `SageMaker-SCADA-ExecutionRole`.
+   * Kiểm tra lại danh sách các quyền đã thêm.
+   * Kéo xuống dưới cùng và nhấn **Create role**.
 
-```
-aws s3 ls s3://<your-bucket-name>
-```
-![test](/images/5-Workshop/5.5-Policy/test1.png)
+![IAM Role Creation](/images/5-Workshop/5.5-Policy/iam-role.png)
 
-Nội dung của bucket bao gồm hai tệp có dung lượng 1GB đã được tải lên trước đó.
+---
 
-2. Tạo một bucket S3 mới; tuân thủ mẫu đặt tên mà bạn đã sử dụng trong Phần 1, nhưng thêm '-2' vào tên. Để các trường khác là mặc định và nhấp vào **Create**.
+### Giám sát hệ thống
 
-![create bucket](/images/5-Workshop/5.5-Policy/create-bucket.png)
+{{% notice info %}}
+**Quyền tự động ghi Logs:**
+Bạn không cần phải cấp quyền riêng lẻ cho việc giám sát. Policy `AmazonSageMakerFullAccess` mặc định đã bao gồm các quyền cơ bản (như `logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents`) để SageMaker có thể tự động đẩy các thông số hàm mất mát (Loss) và các thông báo lỗi (Errors) trong lúc chạy thuật toán XGBoost lên dịch vụ **Amazon CloudWatch**.
+{{% /notice %}}
 
-3. Tạo bucket thành công.
-
-![Success](/images/5-Workshop/5.5-Policy/create-bucket-success.png)
-
-Policy mặc định cho phép truy cập vào tất cả các S3 Buckets thông qua VPC endpoint.
-
-4. Trong giao diện **Edit Policy**, sao chép và dán theo policy sau, thay thế yourbucketname-2 với tên bucket thứ hai của bạn. Policy này sẽ cho phép truy cập đến bucket mới thông qua VPC endpoint, nhưng không cho phép truy cập đến các bucket còn lại. Chọn **Save** để kích hoạt policy.
-
-
-```
-{
-  "Id": "Policy1631305502445",
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Stmt1631305501021",
-      "Action": "s3:*",
-      "Effect": "Allow",
-      "Resource": [
-      				"arn:aws:s3:::yourbucketname-2",
-       				"arn:aws:s3:::yourbucketname-2/*"
-       ],
-      "Principal": "*"
-    }
-  ]
-}
-```
-
-![custom policy](/images/5-Workshop/5.5-Policy/policy2.png)
-
-Cấu hình policy thành công.
-
-![success](/images/5-Workshop/5.5-Policy/success.png)
-
-5. Từ session của bạn trên Test-Gateway-Endpoint instance, kiểm tra truy cập đến S3 bucket bạn tạo ở bước đầu
-
-```
-aws s3 ls s3://<yourbucketname>
-```
-
-Câu lệnh trả về lỗi bởi vì truy cập vào S3 bucket không có quyền trong VPC endpoint policy.
-
-![error](/images/5-Workshop/5.5-Policy/error.png)
-
-6. Trở lại home directory của bạn trên EC2 instance ```cd~```
-
-+ Tạo file ```fallocate -l 1G test-bucket2.xyz ```
-+ Sao chép file lên bucket thứ  2 ```aws s3 cp test-bucket2.xyz s3://<your-2nd-bucket-name>```
-
-![success](/images/5-Workshop/5.5-Policy/test2.png)
-
-Thao tác này được cho phép bởi VPC endpoint policy.
-
-![success](/images/5-Workshop/5.5-Policy/test2-success.png)
-
-Sau đó chúng ta kiểm tra truy cập vào S3 bucket đầu tiên
-
- ```aws s3 cp test-bucket2.xyz s3://<your-1st-bucket-name>```
-
- ![fail](/images/5-Workshop/5.5-Policy/test2-fail.png)
-
- Câu lệnh xảy ra lỗi bởi vì bucket không có quyền truy cập bởi VPC endpoint policy.
-
-Trong phần này, bạn đã tạo chính sách VPC Endpoint cho Amazon S3 và sử dụng AWS CLI để kiểm tra chính sách. Các hoạt động AWS CLI liên quan đến bucket S3 ban đầu của bạn thất bại vì bạn áp dụng một chính sách chỉ cho phép truy cập đến bucket thứ hai mà bạn đã tạo. Các hoạt động AWS CLI nhắm vào bucket thứ hai của bạn thành công vì chính sách cho phép chúng. Những chính sách này có thể hữu ích trong các tình huống khi bạn cần kiểm soát quyền truy cập vào tài nguyên thông qua VPC Endpoint.
+Hoàn tất bước này, kiến trúc bảo mật của bạn đã vững chắc. Hãy chuyển sang phần cuối cùng: **Dọn dẹp tài nguyên** để đảm bảo không phát sinh chi phí ngoài ý muốn sau khi kết thúc môn học.

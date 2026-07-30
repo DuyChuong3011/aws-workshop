@@ -17,13 +17,13 @@ chapter: false
 
 &emsp; **Ngành:** Kỹ thuật Máy tính
 
-<!-- &emsp; **Lớp:** AWS082025 -->
+&emsp; **Lớp:** MT23KTM1
 
 &emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
 
 &emsp; **Vị trí thực tập:** Workforce Bootcamp - First Cloud AI Journey
 
-&emsp; **Thời gian thực tập:** Từ ngày 01/06/2026 đến ngày 12/08/2026
+&emsp; **Thời gian thực tập:** Từ ngày 01/06/2026 đến ngày 14/08/2026
 
 ![Ảnh đại diện của bạn](/images/avatar.png)
 
@@ -38,3 +38,4 @@ chapter: false
 5.  [Workshop](5-Workshop/)
 6.  [Tự đánh giá](6-Self-evaluation/)
 7.  [Chia sẻ, đóng góp ý kiến](7-Feedback/)
+8.  [Link Github dự án](8-Github/)

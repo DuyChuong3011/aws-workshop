@@ -1,39 +1,35 @@
 ---
-title: "Self-Assessment"
-date: 2024-01-01
+title: "Self-evaluation"
+date: 2026-07-24
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+During my internship at **Amazon Web Services Vietnam Co., Ltd.** from **June 1, 2026** to **July 24, 2026**, I had the opportunity to learn, practice, and apply the MLOps knowledge equipped at school into a real working environment. 
+I directly participated in the **ML Engineering phase, designing and training a machine learning model to detect SCADA anomalies using the XGBoost algorithm on the AWS SageMaker platform**. Through this project, I have significantly improved my skills in **Python programming, setting up cloud training pipelines, evaluating model performance, and writing technical documentation**. 
 
-During my internship at **[Company/Organization Name]** from **[start date]** to **[end date]**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in **[briefly describe the main project or task]**, through which I improved my skills in **[list skills: programming, analysis, reporting, communication, etc.]**.  
+Regarding my work attitude, I always try to complete tasks well, proactively research documentation from AWS, and actively communicate with team members to ensure the model is delivered to standard, best prepared for the CI/CD deployment phase.
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
-
-To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
+To objectively reflect the internship process, I would like to self-evaluate based on the criteria below:
 
 | No. | Criteria                            | Description                                                                                      | Good | Fair | Average |
-| --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
-| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ✅    | ☐    | ☐       |
-| 2   | **Ability to learn**                | Ability to absorb new knowledge and learn quickly                                                | ☐    | ✅    | ☐       |
-| 3   | **Proactiveness**                   | Taking initiative, seeking out tasks without waiting for instructions                            | ✅    | ☐    | ☐       |
-| 4   | **Sense of responsibility**         | Completing tasks on time and ensuring quality                                                    | ✅    | ☐    | ☐       |
-| 5   | **Discipline**                      | Adhering to schedules, rules, and work processes                                                 | ☐    | ☐    | ✅       |
-| 6   | **Progressive mindset**             | Willingness to receive feedback and improve oneself                                              | ☐    | ✅    | ☐       |
-| 7   | **Communication**                   | Presenting ideas and reporting work clearly                                                      | ☐    | ✅    | ☐       |
-| 8   | **Teamwork**                        | Working effectively with colleagues and participating in teams                                   | ✅    | ☐    | ☐       |
-| 9   | **Professional conduct**            | Respecting colleagues, partners, and the work environment                                        | ✅    | ☐    | ☐       |
-| 10  | **Problem-solving skills**          | Identifying problems, proposing solutions, and showing creativity                                | ☐    | ✅    | ☐       |
-| 11  | **Contribution to project/team**    | Work effectiveness, innovative ideas, recognition from the team                                  | ✅    | ☐    | ☐       |
-| 12  | **Overall**                         | General evaluation of the entire internship period                                               | ✅    | ☐    | ☐       |
+| --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | --- | --- | ---------- |
+| 1   | **Knowledge and professional skills** | Understanding of the industry, applying knowledge to practice, tool usage skills, work quality | ✅   | ☐   | ☐          |
+| 2   | **Learning ability**                | Acquiring new knowledge, learning quickly                                                            | ☐   | ✅   | ☐          |
+| 3   | **Proactiveness**                        | Self-researching, taking tasks without waiting for instructions                                                  | ✅   | ☐   | ☐          |
+| 4   | **Sense of responsibility**           | Completing work on time, ensuring quality                                                | ✅   | ☐   | ☐          |
+| 5   | **Discipline**                         | Complying with time, rules, and working procedures                                                   | ☐      | ✅   | ☐       |
+| 6   | **Progressive attitude**                   | Willing to receive feedback and improve oneself                                                     | ☐   | ✅   | ☐          |
+| 7   | **Communication**                       | Presenting ideas, reporting work clearly                                                     | ☐   | ✅   | ☐          |
+| 8   | **Team collaboration**                    | Working effectively with colleagues, participating in groups                                                 | ✅   | ☐   | ☐          |
+| 9   | **Professional conduct**            | Respecting colleagues, partners, working environment                                              | ✅   | ☐   | ☐          |
+| 10  | **Problem-solving mindset**        | Identifying problems, proposing solutions, being creative                                                    | ☐   | ✅   | ☐          |
+| 11  | **Contribution to project/organization**      | Work efficiency, improvement initiatives, recognition from the team                                         | ✅   | ☐   | ☐          |
+| 12  | **Overall**                        | General assessment of the entire internship process                                                     | ✅   | ☐   | ☐          |
 
-### Needs Improvement
+### Areas for Improvement
 
-* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization  
-* Improve problem-solving thinking  
-* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively
+* **Organizational Discipline:** Need to improve discipline, strictly adhere to time and organizational regulations. At the same time, need to adhere more closely to standard procedures in managing and cleaning up cloud resources (AWS) to optimize project costs.
+* **Problem-solving mindset:** Need to practice deeper analytical thinking when facing errors that arise during model training or system integration, instead of just focusing on temporary surface-level solutions.
+* **Communication skills:** Need to cultivate the ability to express technical ideas more concisely and understandably in daily communication. In addition, need to be more flexible in handling situations, proactively asking questions, and being open to receiving feedback when coordinating across departments.

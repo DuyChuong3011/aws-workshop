@@ -6,14 +6,33 @@ chapter : false
 pre : " <b> 5.1. </b> "
 ---
 
-#### Giới thiệu về VPC Endpoint
+### Giới thiệu hệ thống MLOps SCADA
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+Trong các quy trình công nghiệp thực tế, việc dự đoán và phát hiện sớm các lỗi hệ thống từ dữ liệu cảm biến (SCADA) đóng vai trò sống còn giúp giảm thiểu thời gian "chết" (downtime) của máy móc. Tuy nhiên, việc phát triển một mô hình học máy (Machine Learning) giải quyết bài toán này thường gặp hai thách thức lớn:
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+1. **Mất cân bằng dữ liệu (Class Imbalance):** Tín hiệu lỗi thường rất hiếm khi xảy ra so với trạng thái hoạt động bình thường, khiến các mô hình dễ bị dự đoán lệch.
+2. **Khó khăn trong vận hành (Operations):** Việc đưa mô hình từ máy tính cá nhân lên môi trường sản xuất đòi hỏi một quy trình quản lý khắt khe, minh bạch và có khả năng tự động hóa.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+Workshop này được thiết kế để giải quyết triệt để hai bài toán trên bằng cách xây dựng một kiến trúc **MLOps toàn trình (End-to-End MLOps)** trên nền tảng AWS. Chúng ta sẽ sử dụng thuật toán **XGBoost** kết hợp cơ chế kiểm soát mất cân bằng nhãn (`scale_pos_weight`), và tự động hóa toàn bộ vòng đời mô hình thông qua **Amazon SageMaker**.
+
+---
+
+### Sơ đồ kiến trúc (Architecture Diagram)
+
+Kiến trúc dưới đây mô tả luồng dữ liệu và sự tương tác giữa các dịch vụ đám mây của AWS trong hệ thống MLOps của chúng ta.
+
+![Architecture Diagram](/images/5-Workshop/5.1-Workshop-overview/pic1.png)
+
+---
+
+### Các thành phần dịch vụ AWS cốt lõi
+
+Dự án này là sự kết hợp chặt chẽ của các dịch vụ đám mây chuẩn công nghiệp:
+
+*   **Amazon S3 (Simple Storage Service):** Đóng vai trò là Data Lake tập trung. Mọi dữ liệu (từ thô đến sạch) và các tệp trọng số của mô hình (`model.tar.gz`) đều được lưu trữ an toàn, chi phí thấp tại đây.
+*   **AWS IAM (Identity and Access Management):** Đảm bảo an ninh cho hệ thống bằng cách áp dụng nguyên tắc "đặc quyền tối thiểu". SageMaker sẽ được cấp một IAM Role riêng biệt, chỉ cho phép đọc/ghi vào đúng S3 Bucket của dự án và ghi Log lên CloudWatch.
+*   **Amazon SageMaker:** Nền tảng Machine Learning toàn diện được quản lý hoàn toàn (Fully Managed), đảm nhiệm 3 vai trò chính:
+    1.  *Training:* Cấp phát máy chủ ảo (EC2) tự động để chạy kịch bản huấn luyện XGBoost.
+    2.  *Automatic Model Tuning (HPO):* Tự động khởi chạy hàng loạt thực nghiệm để tìm ra bộ tham số (hyperparameters) mang lại chỉ số F1-Score cao nhất.
+    3.  *Model Registry:* Quản lý danh mục, lập phiên bản (versioning) và tích hợp cơ chế phê duyệt thủ công (Approval Workflow) trước khi đưa mô hình vào sử dụng.
+*   **Amazon CloudWatch:** Dịch vụ giám sát theo thời gian thực. Toàn bộ quá trình tính toán loss function, epoch logs và metrics đều được ghi lại tại đây giúp kỹ sư dễ dàng theo dõi và gỡ lỗi (debug).

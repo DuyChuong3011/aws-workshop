@@ -1,242 +1,81 @@
 ---
-title : "Các bước chuẩn bị"
-date : 2024-01-01 
+title : "Điều kiện tiên quyết"
+date :  2026-07-30 
 weight : 2
 chapter : false
-pre : " <b> 5.2. </b> "
+pre : " <b> 5.2 </b> "
 ---
 
-#### IAM permissions
-Gắn IAM permission policy sau vào tài khoản aws user của bạn để triển khai và dọn dẹp tài nguyên trong workshop này.
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:*",
-                "cloudwatch:*",
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:AcceptTransitGatewayVpcAttachment",
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AssociateIamInstanceProfile",
-                "ec2:AssociateRouteTable",
-                "ec2:AssociateSubnetCidrBlock",
-                "ec2:AssociateTransitGatewayRouteTable",
-                "ec2:AssociateVpcCidrBlock",
-                "ec2:AttachInternetGateway",
-                "ec2:AttachNetworkInterface",
-                "ec2:AttachVolume",
-                "ec2:AttachVpnGateway",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateClientVpnEndpoint",
-                "ec2:CreateClientVpnRoute",
-                "ec2:CreateCustomerGateway",
-                "ec2:CreateDhcpOptions",
-                "ec2:CreateFlowLogs",
-                "ec2:CreateInternetGateway",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateNetworkAcl",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreateNetworkInterfacePermission",
-                "ec2:CreateRoute",
-                "ec2:CreateRouteTable",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSubnet",
-                "ec2:CreateSubnetCidrReservation",
-                "ec2:CreateTags",
-                "ec2:CreateTransitGateway",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:CreateTransitGatewayRoute",
-                "ec2:CreateTransitGatewayRouteTable",
-                "ec2:CreateTransitGatewayVpcAttachment",
-                "ec2:CreateVpc",
-                "ec2:CreateVpcEndpoint",
-                "ec2:CreateVpcEndpointConnectionNotification",
-                "ec2:CreateVpcEndpointServiceConfiguration",
-                "ec2:CreateVpnConnection",
-                "ec2:CreateVpnConnectionRoute",
-                "ec2:CreateVpnGateway",
-                "ec2:DeleteCustomerGateway",
-                "ec2:DeleteFlowLogs",
-                "ec2:DeleteInternetGateway",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeleteNetworkInterfacePermission",
-                "ec2:DeleteRoute",
-                "ec2:DeleteRouteTable",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteSubnet",
-                "ec2:DeleteSubnetCidrReservation",
-                "ec2:DeleteTags",
-                "ec2:DeleteTransitGateway",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayRoute",
-                "ec2:DeleteTransitGatewayRouteTable",
-                "ec2:DeleteTransitGatewayVpcAttachment",
-                "ec2:DeleteVpc",
-                "ec2:DeleteVpcEndpoints",
-                "ec2:DeleteVpcEndpointServiceConfigurations",
-                "ec2:DeleteVpnConnection",
-                "ec2:DeleteVpnConnectionRoute",
-                "ec2:Describe*",
-                "ec2:DetachInternetGateway",
-                "ec2:DisassociateAddress",
-                "ec2:DisassociateRouteTable",
-                "ec2:GetLaunchTemplateData",
-                "ec2:GetTransitGatewayAttachmentPropagations",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:ModifySecurityGroupRules",
-                "ec2:ModifyTransitGatewayVpcAttachment",
-                "ec2:ModifyVpcAttribute",
-                "ec2:ModifyVpcEndpoint",
-                "ec2:ReleaseAddress",
-                "ec2:ReplaceRoute",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:StartInstances",
-                "ec2:StopInstances",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-                "iam:AddRoleToInstanceProfile",
-                "iam:AttachRolePolicy",
-                "iam:CreateInstanceProfile",
-                "iam:CreatePolicy",
-                "iam:CreateRole",
-                "iam:DeleteInstanceProfile",
-                "iam:DeletePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy",
-                "iam:DetachRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:ListPolicyVersions",
-                "iam:ListRoles",
-                "iam:PassRole",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:DeleteLayerVersion",
-                "lambda:GetFunction",
-                "lambda:GetLayerVersion",
-                "lambda:InvokeFunction",
-                "lambda:PublishLayerVersion",
-                "logs:CreateLogGroup",
-                "logs:DeleteLogGroup",
-                "logs:DescribeLogGroups",
-                "logs:PutRetentionPolicy",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHealthCheck",
-                "route53:CreateHostedZone",
-                "route53:CreateTrafficPolicy",
-                "route53:DeleteHostedZone",
-                "route53:DisassociateVPCFromHostedZone",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53domains:ListDomains",
-                "route53domains:ListOperations",
-                "route53domains:ListTagsForDomain",
-                "route53resolver:AssociateResolverEndpointIpAddress",
-                "route53resolver:AssociateResolverRule",
-                "route53resolver:CreateResolverEndpoint",
-                "route53resolver:CreateResolverRule",
-                "route53resolver:DeleteResolverEndpoint",
-                "route53resolver:DeleteResolverRule",
-                "route53resolver:DisassociateResolverEndpointIpAddress",
-                "route53resolver:DisassociateResolverRule",
-                "route53resolver:GetResolverEndpoint",
-                "route53resolver:GetResolverRule",
-                "route53resolver:ListResolverEndpointIpAddresses",
-                "route53resolver:ListResolverEndpoints",
-                "route53resolver:ListResolverRuleAssociations",
-                "route53resolver:ListResolverRules",
-                "route53resolver:ListTagsForResource",
-                "route53resolver:UpdateResolverEndpoint",
-                "route53resolver:UpdateResolverRule",
-                "s3:AbortMultipartUpload",
-                "s3:CreateBucket",
-                "s3:DeleteBucket",
-                "s3:DeleteObject",
-                "s3:GetAccountPublicAccessBlock",
-                "s3:GetBucketAcl",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketPolicy",
-                "s3:GetBucketPolicyStatus",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetObject",
-                "s3:GetObjectVersion",
-                "s3:GetBucketVersioning",
-                "s3:ListAccessPoints",
-                "s3:ListAccessPointsForObjectLambda",
-                "s3:ListAllMyBuckets",
-                "s3:ListBucket",
-                "s3:ListBucketMultipartUploads",
-                "s3:ListBucketVersions",
-                "s3:ListJobs",
-                "s3:ListMultipartUploadParts",
-                "s3:ListMultiRegionAccessPoints",
-                "s3:ListStorageLensConfigurations",
-                "s3:PutAccountPublicAccessBlock",
-                "s3:PutBucketAcl",
-                "s3:PutBucketPolicy",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutObject",
-                "secretsmanager:CreateSecret",
-                "secretsmanager:DeleteSecret",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:ListSecrets",
-                "secretsmanager:ListSecretVersionIds",
-                "secretsmanager:PutResourcePolicy",
-                "secretsmanager:TagResource",
-                "secretsmanager:UpdateSecret",
-                "sns:ListTopics",
-                "ssm:DescribeInstanceProperties",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ResumeSession",
-                "ssm:StartSession",
-                "ssm:TerminateSession"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
+### Chuẩn bị môi trường làm việc
+
+Để triển khai thành công hệ thống MLOps dự đoán lỗi SCADA trên AWS, bạn cần chuẩn bị sẵn sàng cả tài nguyên đám mây lẫn môi trường lập trình tại máy cục bộ. Dưới đây là các yêu cầu bắt buộc.
+
+---
+
+### 1. Tài khoản AWS & Quyền truy cập
+
+Bạn cần có một tài khoản AWS đang hoạt động. Để đảm bảo an toàn bảo mật và tuân thủ các tiêu chuẩn thực tế, **TUYỆT ĐỐI KHÔNG** sử dụng tài khoản Root để thực hành. 
+
+*   **IAM User:** Khởi tạo một IAM User mới và cấp cho user này quyền quản trị (`AdministratorAccess`) hoặc quyền khởi tạo các dịch vụ cơ bản bao gồm: **Amazon S3**, **AWS IAM**, và **Amazon SageMaker**.
+*   **Security Credentials:** Tạo và tải xuống `Access Key ID` và `Secret Access Key` của IAM User vừa tạo. Đây là chìa khóa để máy cục bộ của bạn có thể giao tiếp với AWS.
+*   **AWS Region:** Xác định và ghi nhớ Khu vực (Region) bạn sẽ triển khai dự án (ví dụ: `ap-southeast-1` cho khu vực Singapore) để đảm bảo dữ liệu và mô hình nằm cùng một nơi, giảm thiểu độ trễ.
+
+![AWS Region](/images/5-Workshop/5.2-Prerequisite/region1.png)
+*Gợi ý: Luôn kiểm tra và đồng nhất Region ở góc trên cùng bên phải của AWS Management Console.*
+
+---
+
+### 2. Môi trường máy cục bộ
+
+Toàn bộ các tệp cấu hình để gọi dịch vụ SageMaker sẽ được viết bằng Python. Bạn cần thiết lập môi trường lập trình trên máy tính cá nhân của mình.
+
+#### Cài đặt Python và Thư viện
+Đảm bảo máy tính của bạn đã cài đặt **Python 3.10+**. Sau đó, mở Terminal (hoặc Command Prompt) và cài đặt các thư viện thiết yếu cho dự án bằng trình quản lý gói `pip`. Ví dụ:
+
+```bash
+pip install awscli sagemaker boto3 xgboost pandas scikit-learn
 
 ```
 
-#### Khởi tạo tài nguyên bằng CloudFormation
+**Chi tiết các thư viện:**
 
-Trong lab này, chúng ta sẽ dùng N.Virginia region (us-east-1).
+* `awscli`: Công cụ dòng lệnh chính thức của AWS.
+* `boto3`: AWS SDK dành cho Python, dùng để tương tác với Amazon S3 và IAM.
+* `sagemaker`: SageMaker Python SDK, thư viện chuyên dụng để cấu hình và khởi chạy các kịch bản MLOps.
+* `xgboost`, `pandas`, `scikit-learn`: Các thư viện xử lý dữ liệu và học máy cơ bản dùng để tiền xử lý và thiết lập script đánh giá.
 
-Để chuẩn bị cho môi trường làm workshop, chúng ta deploy CloudFormation template sau (click link): [PrivateLinkWorkshop ](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.us-east-1.amazonaws.com/reinvent-endpoints-builders-session/Nested.yaml&stackName=PLCloudSetup). Để nguyên các lựa chọn mặc định.
+---
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack1.png)
+### 3. Cấu hình AWS CLI
 
-+ Lựa chọn 2 mục acknowledgement 
-+ Chọn Create stack
+Sau khi cài đặt xong các thư viện, bước quan trọng nhất là liên kết môi trường Local của bạn với tài khoản AWS thông qua AWS CLI.
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack2.png)
+Từ Terminal, chạy lệnh sau:
 
-Quá trình triển khai CloudFormation cần khoảng 15 phút để hoàn thành.
+```bash
+aws configure
 
-![complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+```
 
-+ 2 VPCs đã được tạo
+Hệ thống sẽ yêu cầu bạn nhập lần lượt 4 thông tin (Sử dụng thông tin Security Credentials đã tạo ở phần 1):
 
-![vpcs](/images/5-Workshop/5.2-Prerequisite/vpcs.png)
+1. **AWS Access Key ID [None]:** `AKIAIOSFODNN7EXAMPLE` *(nhập Key của bạn)*
+2. **AWS Secret Access Key [None]:** `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY` *(nhập Secret Key của bạn)*
+3. **Default region name [None]:** `ap-southeast-1` *(nhập mã Region của bạn)*
+4. **Default output format [None]:** `json`
 
-+ 3 EC2s đã được tạo
+{{% notice info %}}
+**Kiểm tra kết nối:**
+Để chắc chắn AWS CLI đã được cấu hình thành công, hãy chạy thử lệnh `aws s3 ls`. Nếu hệ thống không báo lỗi (không hiện gì nếu chưa có bucket, hoặc hiện danh sách các bucket hiện tại), môi trường của bạn đã sẵn sàng!
+{{% /notice %}}
 
-![EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+---
+
+### 4. Chuẩn bị Mã nguồn và Dữ liệu
+
+Hãy đảm bảo bạn đã có sẵn thư mục dự án SCADA MLOps trên máy chứa các tệp sau:
+
+* Tập dữ liệu thô: `SCADA_data.csv`
+* Các kịch bản (Scripts) Python: `train.py` (Kịch bản huấn luyện XGBoost) và `evaluate.py` (Kịch bản đánh giá mô hình).
+
+Khi tất cả các điều kiện tiên quyết đã hoàn tất, hãy chuyển sang bài thực hành tiếp theo để bắt đầu xây dựng **Data Lake** đầu tiên của chúng ta trên Amazon S3!
