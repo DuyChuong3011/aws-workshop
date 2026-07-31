@@ -24,5 +24,3 @@ Dưới đây là danh sách các tài nguyên bạn cần rà soát và xóa b�
 **Cảnh báo Chi phí (Cloud Billing):**
 Hãy kiểm tra thật kỹ AWS Billing Dashboard để đảm bảo không còn tài nguyên tính toán nào đang chạy ngầm. Quá trình tự động hóa MLOps rất tiện lợi, nhưng việc quên tắt máy chủ có thể khiến bạn bị trừ tiền oan uổng chỉ sau một đêm!
 {{% /notice %}}
-
-![Cleanup Resources](/images/5-Workshop/5.9-Cleanup/cleanup.png)
