@@ -21,7 +21,7 @@ Workshop này được thiết kế để giải quyết triệt để hai bài 
 
 Kiến trúc dưới đây mô tả luồng dữ liệu và sự tương tác giữa các dịch vụ đám mây của AWS trong hệ thống MLOps của chúng ta.
 
-![Architecture Diagram](/images/5-Workshop/5.1-Workshop-overview/pic1.png)
+![Architecture Diagram](/images/2-Proposal/total_architecture.png)
 
 ---
 

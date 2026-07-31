@@ -44,7 +44,7 @@ Compared to manually managing the machine learning lifecycle, the proposed solut
 
 The proposed architecture follows a complete machine learning workflow. Sensor datasets are stored in Amazon S3, processed using SageMaker Processing Jobs, transformed through feature engineering, and used to train machine learning models. The best model is centrally managed in the Model Registry. From there, it can optionally be deployed to an Endpoint for testing, while CloudWatch and SNS provide automated monitoring and alerting.
 
-![SCADA System Architecture](/images/2-Proposal/scada_architecture.png)
+![SCADA System Architecture](/images/2-Proposal/total_architecture.png)
 
 ### AWS Services Used
 

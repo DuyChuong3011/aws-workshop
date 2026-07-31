@@ -44,7 +44,7 @@ Ngoài ra, nền tảng còn tạo ra một kiến trúc có thể tái sử d�
 
 Hệ thống được xây dựng theo kiến trúc Machine Learning hoàn chỉnh trên AWS. Dữ liệu SCADA được lưu trữ trong Amazon S3, sau đó được xử lý bằng SageMaker Processing Jobs và Feature Engineering trước khi huấn luyện các mô hình Machine Learning. Mô hình có kết quả tốt nhất sẽ được lưu trữ và quản lý trong Model Registry. Từ đây, mô hình có thể được triển khai thử nghiệm ra Endpoint nếu cần, trong khi CloudWatch và SNS đảm nhiệm việc giám sát và gửi cảnh báo tự động.
 
-![SCADA System Architecture](/images/2-Proposal/scada_architecture.png)
+![SCADA System Architecture](/images/2-Proposal/total_architecture.png)
 
 ### Dịch vụ AWS sử dụng
 

@@ -21,7 +21,7 @@ This workshop is designed to completely solve the two problems above by building
 
 The architecture below describes the data flow and interaction between AWS cloud services in our MLOps system.
 
-![Architecture Diagram](/images/5-Workshop/5.1-Workshop-overview/pic1.png)
+![Architecture Diagram](/images/2-Proposal/total_architecture.png)
 
 ---
 

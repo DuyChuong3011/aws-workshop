@@ -1,31 +1,67 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-07-17
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+## 1. TỔNG QUAN BÀI VIẾT & BỐI CẢNH DỰ ÁN
 
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
+* **Tác giả:** Huỳnh Duy Chương.
+* **Bối cảnh:** Tham gia chương trình *AWS Study Group*, đối mặt với bài toán tối ưu hóa thời gian học tập hạn chế để đạt hiệu quả cao nhất cho công việc thực tế tại doanh nghiệp.
+* **Mục tiêu bài viết:** Xác định chiến lược phân bổ thời gian học tập, dịch chuyển từ thói quen làm việc trên Jupyter Notebook local sang quy trình vận hành đám mây chuẩn hóa. [LINK](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2226421048122855/?rdid=Qh4KrhITN1dA0Io4#)
+---
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+## 2. PHÂN TÍCH CHUYÊN MÔN VỀ CÁC TRỤ CỘT KIẾN THỨC
 
-Các điểm chính cần nắm:
+Bài viết đã phân loại và sắp xếp thứ tự ưu tiên các dịch vụ AWS một cách rất logic theo đúng vòng đời phát triển của một dự án Machine Learning (ML Lifecycle):
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+```text
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       1. Storage & Security Layer                       │
+│                         (Amazon S3, AWS IAM, VPC)                       │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       2. MLOps & Training Engine                        │
+│             (SageMaker Data Wrangler, Feature Store, HPO,               │
+│                        SageMaker Model Registry)                        │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     3. Inference & Deployment Layer                     │
+│               (SageMaker Endpoints, API Gateway, AWS Lambda)            │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     4. Monitoring & Governance                          │
+│                      (AWS CloudWatch, EC2 Types)                        │
+└─────────────────────────────────────────────────────────────────────────┘
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+```
 
-...Hình ảnh...
+### A. Nền tảng Đám mây & Bảo mật (S3, IAM, VPC)
 
-...Link...
+* Nhiều bạn sinh viên thường xem nhẹ phần này và nhảy ngay vào huấn luyện mô hình. Việc hiểu rõ **S3** (lưu trữ tập trung), **IAM** (nguyên tắc Least Privilege) và **VPC Endpoints** (bảo mật đường truyền nội bộ) giúp đảm bảo dữ liệu doanh nghiệp không bị rò rỉ ra ngoài Internet.
 
-...Hướng dẫn...
+### B. MLOps chuẩn hóa với Amazon SageMaker
+
+* **Feature Engineering & Feature Store:** Việc chuyển từ xử lý dữ liệu đơn lẻ bằng Pandas sang quản lý Feature tập trung giúp tái sử dụng dữ liệu cho nhiều mô hình, tránh hiện tượng tính toán lặp lại (Data Leakage / Redundancy).
+* **Automatic Hyperparameter Tuning (HPO):** Chuyển dịch từ việc "mò mẫm" thủ công sang tự động hóa tìm kiếm không gian tham số tối ưu, giúp giải phóng thời gian cho kỹ sư tập trung vào thiết kế kiến trúc.
+* **Model Registry:** Thiết lập quy trình quản lý phiên bản mô hình (**v1.0**, **v1.1**, **Approved**) minh bạch. Đây là xương sống của mọi pipeline MLOps hiện đại.
+
+### C. Triển khai mô hình & Kiến trúc Serverless
+
+* **SageMaker Endpoints:** Đưa mô hình ra khỏi môi trường thử nghiệm để đóng gói thành dịch vụ API sẵn sàng phục vụ các ứng dụng Client.
+* **API Gateway + AWS Lambda (Serverless):** Lựa chọn tối ưu cho giai đoạn Prototype/Demo. Việc kết hợp này giúp tối ưu hóa chi phí — hệ thống chỉ phát sinh chi phí khi có lượt gọi API thực tế.
+
+---
+
+## 3. LINK TÀI LIỆU THAM KHẢO
+
+* [AWS Documentation: Amazon SageMaker Developer Guide](https://docs.aws.amazon.com/sagemaker/)
+* [AWS Architecture Center: MLOps Foundation Roadmap on AWS](https://www.google.com/search?q=https://aws.amazon.com/architecture/mlops/)
+* [AWS Workshop: SageMaker Immersion Day Hands-on Labs](https://www.google.com/search?q=https://sagemaker-immersionday.workshop.aws/)
