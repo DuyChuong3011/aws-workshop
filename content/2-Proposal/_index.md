@@ -77,8 +77,8 @@ The proposed architecture follows a complete machine learning workflow. Sensor d
 
 The project follows four major development phases:
 
-- **Phase 1 – Data Preparation:** Collect the SKAB dataset, perform exploratory data analysis (EDA), clean missing values, and prepare the dataset.
-- **Phase 2 – Feature Engineering:** Generate rolling statistics, Z-score, differential features, and normalize sensor values.
+- **Phase 1 – Data Preparation:** Collect the SKAB dataset, perform exploratory data analysis (EDA), clean missing values, and fix meaningless labels (Label_Error).
+- **Phase 2 – Feature Engineering:** Process wind direction using trigonometry (Sin/Cos), add time awareness (Month, Hour), optimize dimensionality using lag variables (Lag_1) instead of Rolling statistics, and preserve outliers instead of capping them with Z-scores.
 - **Phase 3 – Model Development:** Train XGBoost, Isolation Forest, and LSTM models; compare their performance using F1 Score and AUC-ROC.
 - **Phase 4 – Deployment and Monitoring:** Deploy the selected model to SageMaker Endpoint, implement Lambda and API Gateway, configure CloudWatch monitoring, SNS notifications, and SageMaker Pipeline automation.
 

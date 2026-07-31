@@ -14,9 +14,12 @@ Kiến trúc của dự án thay thế các thao tác thủ công bằng việc 
 
 #### Nội dung
 
-1. [Tổng quan về workshop](5.1-Workshop-overview/)
-2. [Chuẩn bị](5.2-Prerequiste/)
-3. [Thiết lập Amazon S3 (Data Lake)](5.3-S3-data/)
-4. [Huấn luyện và quản lý mô hình](5.4-SageMaker/)
-5. [VPC Endpoint Policies (làm thêm)](5.5-Policy/)
-6. [Dọn dẹp tài nguyên](5.6-Cleanup/)
+1. [Giới thiệu](5.1-Workshop-overview/)
+2. [Điều kiện tiên quyết](5.2-Prerequiste/)
+3. [Tải dữ liệu lên Amazon S3](5.3-Upload-S3/)
+4. [Tiền xử lý dữ liệu bằng SageMaker](5.4-Processing/)
+5. [Huấn luyện và quản lý mô hình](5.5-SageMaker/)
+6. [Giám sát Endpoint với CloudWatch](5.6-Monitor-CloudWatch/)
+7. [Tạo thông báo SNS](5.7-Create-SNS-Notification/)
+8. [Thiết lập IAM Policy](5.8-Policy/)
+9. [Dọn dẹp tài nguyên](5.9-Cleanup/)

@@ -77,8 +77,8 @@ Hệ thống được xây dựng theo kiến trúc Machine Learning hoàn chỉ
 
 Dự án được chia thành bốn giai đoạn chính:
 
-1. **Chuẩn bị dữ liệu:** Thu thập bộ dữ liệu SKAB, thực hiện EDA và tiền xử lý dữ liệu.
-2. **Xây dựng đặc trưng:** Tạo các đặc trưng Rolling Statistics, Z-score, Difference và chuẩn hóa dữ liệu.
+1. **Chuẩn bị dữ liệu:** Thu thập bộ dữ liệu SKAB, thực hiện EDA và xử lý lỗi gán nhãn vô nghĩa (Label_Error).
+2. **Xây dựng đặc trưng:** Xử lý góc gió bằng lượng giác (Sin/Cos), thêm đặc trưng thời gian (Giờ, Tháng), tối ưu biến trễ (Lag_1) thay cho Rolling, và bảo toàn các điểm dữ liệu dị thường thay vì dùng Z-score.
 3. **Huấn luyện mô hình:** Huấn luyện và so sánh XGBoost, Isolation Forest và LSTM dựa trên F1 Score và AUC-ROC.
 4. **Triển khai và giám sát:** Triển khai SageMaker Endpoint, xây dựng Lambda, API Gateway, CloudWatch, SNS và SageMaker Pipeline.
 
