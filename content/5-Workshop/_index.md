@@ -10,7 +10,7 @@ pre: " <b> 5. </b> "
 
 In this workshop section, our team will provide a detailed guide on how to deploy an end-to-end Machine Learning Operations (MLOps) system on the AWS platform to solve the problem of anomaly detection from SCADA sensor data.
 
-The project architecture replaces manual operations by automating the entire machine learning lifecycle: from setting up a data storage space (Data Lake) and security authorization, to training the XGBoost model (handling class imbalance), optimizing hyperparameters (HPO), and managing model versions in the cloud.
+The project architecture replaces manual operations by automating the machine learning lifecycle: from setting up data storage (Amazon S3) and security authorization (AWS IAM), to training and managing models (Amazon SageMaker), as well as monitoring (Amazon CloudWatch) and setting up automated alerts (Amazon SNS).
 
 #### Content
 

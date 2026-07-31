@@ -14,7 +14,7 @@ pre: " <b> 2. </b> "
 
 SCADA Fault Prediction Platform được xây dựng nhằm phát hiện và dự đoán sớm các sự cố thiết bị công nghiệp dựa trên dữ liệu cảm biến SCADA. Hệ thống sử dụng bộ dữ liệu công khai **SKAB (Skoltech Anomaly Benchmark)** kết hợp với các dịch vụ Machine Learning trên nền tảng AWS để tự động hóa toàn bộ quy trình từ tiền xử lý dữ liệu, xây dựng đặc trưng, huấn luyện mô hình, đánh giá, triển khai đến giám sát hệ thống.
 
-Giải pháp được phát triển chủ yếu trên Amazon SageMaker cùng các dịch vụ AWS liên quan, giúp sinh viên và nhóm nghiên cứu dễ dàng xây dựng hệ thống Predictive Maintenance có khả năng mở rộng mà không cần quản lý hạ tầng phức tạp. Hệ thống cung cấp API dự đoán theo thời gian thực và hỗ trợ giám sát trạng thái hoạt động của mô hình.
+Giải pháp được phát triển chủ yếu trên Amazon SageMaker cùng các dịch vụ AWS liên quan, giúp sinh viên và nhóm nghiên cứu dễ dàng xây dựng hệ thống Predictive Maintenance có khả năng mở rộng mà không cần quản lý hạ tầng phức tạp. Hệ thống hỗ trợ tự động hóa toàn bộ quy trình, cung cấp khả năng triển khai mô hình (tùy chọn) và giám sát trạng thái hoạt động một cách chặt chẽ.
 
 ---
 
@@ -30,7 +30,7 @@ Mặc dù Machine Learning có thể hỗ trợ bảo trì dự đoán hiệu qu
 
 Hệ thống sử dụng Amazon S3 để lưu trữ dữ liệu SCADA, SageMaker Processing Jobs để tiền xử lý và xây dựng đặc trưng, sau đó huấn luyện nhiều mô hình như XGBoost, Isolation Forest và LSTM bằng SageMaker Training Jobs. Hyperparameter Optimization được sử dụng để tự động tìm bộ tham số tối ưu.
 
-Sau khi lựa chọn được mô hình tốt nhất, hệ thống đăng ký mô hình vào SageMaker Model Registry và triển khai thành SageMaker Endpoint. AWS Lambda kết hợp Amazon API Gateway cung cấp REST API cho việc dự đoán thời gian thực, trong khi Amazon CloudWatch và Amazon SNS đảm nhiệm việc giám sát và gửi cảnh báo khi phát hiện bất thường.
+Sau khi lựa chọn được mô hình tốt nhất, hệ thống đăng ký mô hình vào SageMaker Model Registry. Việc triển khai thành SageMaker Endpoint có thể được thực hiện để kiểm thử (tùy chọn), trong khi Amazon CloudWatch và Amazon SNS đảm nhiệm việc giám sát quá trình.
 
 #### Lợi ích và hiệu quả mang lại
 
@@ -42,31 +42,24 @@ Ngoài ra, nền tảng còn tạo ra một kiến trúc có thể tái sử d�
 
 ### 3. Kiến trúc giải pháp
 
-Hệ thống được xây dựng theo kiến trúc Machine Learning hoàn chỉnh trên AWS. Dữ liệu SCADA được lưu trữ trong Amazon S3, sau đó được xử lý bằng SageMaker Processing Jobs và Feature Engineering trước khi huấn luyện các mô hình Machine Learning. Mô hình có kết quả tốt nhất sẽ được đăng ký trong Model Registry và triển khai thành SageMaker Endpoint để phục vụ dự đoán trực tuyến. AWS Lambda và API Gateway cung cấp REST API, trong khi CloudWatch và SNS đảm nhiệm việc giám sát và gửi cảnh báo.
+Hệ thống được xây dựng theo kiến trúc Machine Learning hoàn chỉnh trên AWS. Dữ liệu SCADA được lưu trữ trong Amazon S3, sau đó được xử lý bằng SageMaker Processing Jobs và Feature Engineering trước khi huấn luyện các mô hình Machine Learning. Mô hình có kết quả tốt nhất sẽ được lưu trữ và quản lý trong Model Registry. Từ đây, mô hình có thể được triển khai thử nghiệm ra Endpoint nếu cần, trong khi CloudWatch và SNS đảm nhiệm việc giám sát và gửi cảnh báo tự động.
 
 ![SCADA System Architecture](/images/2-Proposal/scada_architecture.png)
 
 ### Dịch vụ AWS sử dụng
 
 - **Amazon S3**: Lưu trữ dữ liệu gốc, dữ liệu đã xử lý và đặc trưng.
-- **Amazon SageMaker Processing**: Tiền xử lý dữ liệu và Feature Engineering.
-- **Amazon SageMaker Training**: Huấn luyện các mô hình Machine Learning.
-- **Amazon SageMaker Experiments**: Theo dõi các lần huấn luyện.
-- **Amazon SageMaker Hyperparameter Optimization**: Tối ưu tham số mô hình.
-- **Amazon SageMaker Model Registry**: Quản lý phiên bản mô hình.
-- **Amazon SageMaker Endpoint**: Cung cấp dịch vụ dự đoán thời gian thực.
-- **AWS Lambda**: Xử lý các yêu cầu dự đoán.
-- **Amazon API Gateway**: Cung cấp REST API.
+- **AWS IAM**: Đảm bảo phân quyền bảo mật chặt chẽ cho hệ thống.
+- **Amazon SageMaker**: Nền tảng Machine Learning toàn diện, được sử dụng để tiền xử lý dữ liệu (Processing), huấn luyện mô hình (Training & HPO), quản lý phiên bản (Model Registry) và thử nghiệm triển khai (Endpoint).
 - **Amazon CloudWatch**: Giám sát hiệu năng hệ thống.
-- **Amazon SNS**: Gửi cảnh báo khi phát hiện lỗi.
+- **Amazon SNS**: Gửi cảnh báo tự động khi phát hiện lỗi.
 
 ### Thiết kế thành phần
 
 - **Lớp dữ liệu**: Bộ dữ liệu SKAB được lưu trên Amazon S3.
 - **Xử lý dữ liệu**: SageMaker Processing thực hiện tiền xử lý và xây dựng đặc trưng.
 - **Huấn luyện mô hình**: SageMaker Training huấn luyện XGBoost, Isolation Forest và LSTM, kết hợp HPO để tối ưu tham số.
-- **Triển khai mô hình**: Mô hình tốt nhất được đăng ký vào Model Registry và triển khai thành SageMaker Endpoint.
-- **API dự đoán**: Lambda và API Gateway cung cấp giao diện REST API cho người dùng.
+- **Quản lý mô hình**: Mô hình tốt nhất được đăng ký và quản lý phiên bản tập trung tại Model Registry.
 - **Giám sát hệ thống**: CloudWatch theo dõi hiệu năng, SNS gửi cảnh báo khi xảy ra bất thường.
 
 ---
@@ -80,7 +73,7 @@ Dự án được chia thành bốn giai đoạn chính:
 1. **Chuẩn bị dữ liệu:** Thu thập bộ dữ liệu SKAB, thực hiện EDA và xử lý lỗi gán nhãn vô nghĩa (Label_Error).
 2. **Xây dựng đặc trưng:** Xử lý góc gió bằng lượng giác (Sin/Cos), thêm đặc trưng thời gian (Giờ, Tháng), tối ưu biến trễ (Lag_1) thay cho Rolling, và bảo toàn các điểm dữ liệu dị thường thay vì dùng Z-score.
 3. **Huấn luyện mô hình:** Huấn luyện và so sánh XGBoost, Isolation Forest và LSTM dựa trên F1 Score và AUC-ROC.
-4. **Triển khai và giám sát:** Triển khai SageMaker Endpoint, xây dựng Lambda, API Gateway, CloudWatch, SNS và SageMaker Pipeline.
+4. **Triển khai và giám sát:** Quản lý mô hình trên Model Registry, thiết lập giám sát bằng CloudWatch và nhận cảnh báo tự động qua SNS.
 
 #### Yêu cầu kỹ thuật
 
@@ -99,8 +92,6 @@ Dự án được chia thành bốn giai đoạn chính:
 
 - Amazon S3
 - Amazon SageMaker
-- AWS Lambda
-- Amazon API Gateway
 - Amazon CloudWatch
 - Amazon SNS
 - AWS IAM
@@ -114,8 +105,8 @@ Dự án được chia thành bốn giai đoạn chính:
 - **Tuần 3:** Huấn luyện mô hình trên môi trường Local.
 - **Tuần 4:** Triển khai SageMaker Processing và Training Jobs.
 - **Tuần 5:** Hyperparameter Optimization và Model Registry.
-- **Tuần 6:** Triển khai SageMaker Endpoint và xây dựng REST API.
-- **Tuần 7:** Tích hợp SageMaker Pipeline và kiểm thử toàn bộ hệ thống.
+- **Tuần 6:** Khám phá thử nghiệm triển khai SageMaker Endpoint (tùy chọn) và các cơ chế dọn dẹp tài nguyên.
+- **Tuần 7:** Tích hợp giám sát hệ thống với CloudWatch, cấu hình cảnh báo SNS và kiểm thử toàn bộ luồng MLOps.
 - **Tuần 8:** Hoàn thiện tài liệu, kiểm thử cuối cùng và trình bày dự án.
 
 ---
@@ -125,11 +116,7 @@ Dự án được chia thành bốn giai đoạn chính:
 Chi phí hạ tầng chủ yếu đến từ các dịch vụ AWS:
 
 - Amazon S3
-- Amazon SageMaker Processing
-- Amazon SageMaker Training
-- Amazon SageMaker Endpoint
-- AWS Lambda
-- Amazon API Gateway
+- Amazon SageMaker (Processing, Training, Endpoint)
 - Amazon CloudWatch
 - Amazon SNS
 
@@ -161,7 +148,7 @@ Dự án hướng đến mục đích học tập và nghiên cứu nên có th�
 
 - Tiếp tục huấn luyện và đánh giá mô hình trên môi trường Local khi không thể sử dụng tài nguyên AWS.
 - Triển khai lại phiên bản mô hình đã được phê duyệt từ SageMaker Model Registry khi xảy ra lỗi.
-- Khôi phục phiên bản Pipeline trước đó nếu phiên bản mới làm giảm chất lượng dự đoán.
+- Chuyển về phiên bản mô hình cũ hơn từ Model Registry nếu phiên bản mới không đạt yêu cầu.
 
 ---
 
@@ -171,7 +158,7 @@ Dự án hướng đến mục đích học tập và nghiên cứu nên có th�
 
 - Tự động hóa toàn bộ quy trình Machine Learning trên AWS.
 - Dự đoán sự cố thiết bị công nghiệp theo thời gian thực.
-- Cung cấp REST API phục vụ dự đoán trực tuyến.
+- Mở ra khả năng mở rộng để phục vụ dự đoán trực tuyến.
 - Tự động triển khai và quản lý vòng đời mô hình.
 - Xây dựng quy trình MLOps có thể tái sử dụng.
 

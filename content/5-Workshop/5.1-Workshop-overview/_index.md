@@ -36,3 +36,4 @@ This project is a tight integration of industry-standard cloud services:
     2.  *Automatic Model Tuning (HPO):* Automatically launching batches of experiments to find the set of hyperparameters that yield the highest F1-Score.
     3.  *Model Registry:* Managing catalogs, versioning, and integrating a manual Approval Workflow before putting the model into use.
 *   **Amazon CloudWatch:** A real-time monitoring service. The entire process of calculating loss functions, epoch logs, and metrics is recorded here, helping engineers easily monitor and debug.
+*   **Amazon SNS (Simple Notification Service):** An automated notification service. It is integrated to send immediate email alerts to administrators when anomalies occur.

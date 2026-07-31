@@ -14,7 +14,7 @@ pre: " <b> 2. </b> "
 
 The SCADA Fault Prediction Platform is designed to provide an intelligent predictive maintenance solution for industrial equipment using SCADA sensor data. The platform utilizes the publicly available SKAB (Skoltech Anomaly Benchmark) dataset and AWS cloud services to automate the complete machine learning lifecycle, including data preprocessing, feature engineering, model training, evaluation, deployment, and monitoring.
 
-The solution is built primarily on Amazon SageMaker and related AWS services, enabling researchers and students to develop scalable anomaly detection systems with minimal infrastructure management. The platform provides real-time prediction through REST APIs and supports automated model deployment and monitoring.
+The solution is built primarily on Amazon SageMaker and related AWS services, enabling researchers and students to develop scalable anomaly detection systems with minimal infrastructure management. The platform supports automated model versioning, optional deployment for inference, and continuous monitoring of system health.
 
 ---
 
@@ -30,7 +30,7 @@ Although machine learning can improve predictive maintenance, deploying an end-t
 
 The proposed platform leverages Amazon S3 for data storage, Amazon SageMaker Processing Jobs for preprocessing and feature engineering, and SageMaker Training Jobs to train multiple machine learning models such as XGBoost, Isolation Forest, and LSTM. Hyperparameter Optimization (HPO) automatically searches for the optimal model configuration.
 
-The best-performing model is registered in Amazon SageMaker Model Registry and deployed as a SageMaker Endpoint. AWS Lambda and Amazon API Gateway provide REST APIs for real-time predictions, while Amazon CloudWatch and Amazon SNS monitor endpoint health and notify users when abnormal system behavior is detected.
+The best-performing model is registered in Amazon SageMaker Model Registry for version control. An optional deployment to a SageMaker Endpoint can be performed for testing, while Amazon CloudWatch and Amazon SNS monitor system health and notify users when abnormal behavior is detected.
 
 ### Benefits and Return on Investment
 
@@ -42,31 +42,24 @@ Compared to manually managing the machine learning lifecycle, the proposed solut
 
 ### 3. Solution Architecture
 
-The proposed architecture follows a complete machine learning workflow. Sensor datasets are stored in Amazon S3, processed using SageMaker Processing Jobs, transformed through feature engineering, and used to train machine learning models. The best model is registered and deployed for online inference. AWS Lambda and API Gateway expose prediction services, while CloudWatch and SNS provide monitoring and alerting.
+The proposed architecture follows a complete machine learning workflow. Sensor datasets are stored in Amazon S3, processed using SageMaker Processing Jobs, transformed through feature engineering, and used to train machine learning models. The best model is centrally managed in the Model Registry. From there, it can optionally be deployed to an Endpoint for testing, while CloudWatch and SNS provide automated monitoring and alerting.
 
 ![SCADA System Architecture](/images/2-Proposal/scada_architecture.png)
 
 ### AWS Services Used
 
 - **Amazon S3**: Stores raw datasets, processed datasets, and engineered features.
-- **Amazon SageMaker Processing**: Performs preprocessing and feature engineering.
-- **Amazon SageMaker Training**: Trains machine learning models.
-- **Amazon SageMaker Experiments**: Tracks training experiments.
-- **Amazon SageMaker Hyperparameter Optimization**: Tunes model parameters automatically.
-- **Amazon SageMaker Model Registry**: Manages model versions.
-- **Amazon SageMaker Endpoint**: Provides real-time inference.
-- **AWS Lambda**: Processes prediction requests.
-- **Amazon API Gateway**: Exposes REST APIs.
-- **Amazon CloudWatch**: Monitors endpoint performance.
-- **Amazon SNS**: Sends alert notifications.
+- **AWS IAM**: Ensures strict security and access control for the system.
+- **Amazon SageMaker**: A comprehensive ML platform used for data preprocessing (Processing), model training (Training & HPO), version management (Model Registry), and optional deployment testing (Endpoint).
+- **Amazon CloudWatch**: Monitors system performance.
+- **Amazon SNS**: Sends automated alert notifications.
 
 ### Component Design
 
 - **Dataset Layer**: SKAB dataset stored in Amazon S3.
 - **Data Processing**: SageMaker Processing performs preprocessing and feature engineering.
 - **Model Training**: SageMaker trains multiple ML models and performs hyperparameter optimization.
-- **Model Deployment**: The best model is registered and deployed as a SageMaker Endpoint.
-- **Prediction API**: Lambda and API Gateway provide prediction services.
+- **Model Management**: The best model is registered and version-controlled centrally in the Model Registry.
 - **Monitoring**: CloudWatch monitors system performance and SNS sends alerts.
 
 ---
@@ -80,7 +73,7 @@ The project follows four major development phases:
 - **Phase 1 – Data Preparation:** Collect the SKAB dataset, perform exploratory data analysis (EDA), clean missing values, and fix meaningless labels (Label_Error).
 - **Phase 2 – Feature Engineering:** Process wind direction using trigonometry (Sin/Cos), add time awareness (Month, Hour), optimize dimensionality using lag variables (Lag_1) instead of Rolling statistics, and preserve outliers instead of capping them with Z-scores.
 - **Phase 3 – Model Development:** Train XGBoost, Isolation Forest, and LSTM models; compare their performance using F1 Score and AUC-ROC.
-- **Phase 4 – Deployment and Monitoring:** Deploy the selected model to SageMaker Endpoint, implement Lambda and API Gateway, configure CloudWatch monitoring, SNS notifications, and SageMaker Pipeline automation.
+- **Phase 4 – Deployment and Monitoring:** Manage the model via Model Registry, configure CloudWatch monitoring, and set up SNS notifications.
 
 **Technical Requirements**
 
@@ -97,8 +90,6 @@ AWS Services:
 
 - Amazon S3
 - Amazon SageMaker
-- AWS Lambda
-- Amazon API Gateway
 - Amazon CloudWatch
 - Amazon SNS
 - AWS IAM
@@ -114,8 +105,8 @@ AWS Services:
 - **Week 3:** Local machine learning model development and performance comparison.
 - **Week 4:** Model evaluation, hyperparameter optimization, and best model selection.
 - **Week 5:** Upload datasets to Amazon S3 and train the selected model using Amazon SageMaker.
-- **Week 6:** Deploy the trained model as a SageMaker Endpoint and develop prediction APIs using AWS Lambda and Amazon API Gateway.
-- **Week 7:** Integrate the end-to-end prediction pipeline, configure Amazon CloudWatch monitoring, and create Amazon SNS notifications.
+- **Week 6:** Explore optional SageMaker Endpoint deployment for testing and resource cleanup strategies.
+- **Week 7:** Integrate CloudWatch monitoring, create Amazon SNS notifications, and perform end-to-end MLOps workflow testing.
 - **Week 8:** Perform final system testing, clean up AWS resources, complete documentation, and prepare the final presentation.
 ---
 
@@ -124,11 +115,7 @@ AWS Services:
 Infrastructure costs mainly consist of AWS cloud services:
 
 - Amazon S3
-- Amazon SageMaker Processing
-- Amazon SageMaker Training
-- Amazon SageMaker Endpoint
-- AWS Lambda
-- Amazon API Gateway
+- Amazon SageMaker (Processing, Training, Endpoint)
 - Amazon CloudWatch
 - Amazon SNS
 
@@ -160,7 +147,7 @@ Hardware Cost:
 
 - Continue local model development if AWS resources become unavailable.
 - Redeploy previously approved models from SageMaker Model Registry.
-- Roll back to the previous deployment if performance degrades.
+- Roll back to the previous model version from the Model Registry if performance degrades.
 
 ---
 
@@ -170,7 +157,7 @@ Hardware Cost:
 
 - Automated end-to-end machine learning workflow.
 - Accurate fault prediction using SCADA sensor data.
-- Real-time prediction through REST APIs.
+- Scalable foundation for future real-time online predictions.
 - Automated model deployment and monitoring.
 - Reproducible MLOps pipeline using AWS.
 

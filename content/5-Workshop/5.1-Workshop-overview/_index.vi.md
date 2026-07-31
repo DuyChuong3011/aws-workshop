@@ -36,3 +36,4 @@ Dự án này là sự kết hợp chặt chẽ của các dịch vụ đám mâ
     2.  *Automatic Model Tuning (HPO):* Tự động khởi chạy hàng loạt thực nghiệm để tìm ra bộ tham số (hyperparameters) mang lại chỉ số F1-Score cao nhất.
     3.  *Model Registry:* Quản lý danh mục, lập phiên bản (versioning) và tích hợp cơ chế phê duyệt thủ công (Approval Workflow) trước khi đưa mô hình vào sử dụng.
 *   **Amazon CloudWatch:** Dịch vụ giám sát theo thời gian thực. Toàn bộ quá trình tính toán loss function, epoch logs và metrics đều được ghi lại tại đây giúp kỹ sư dễ dàng theo dõi và gỡ lỗi (debug).
+*   **Amazon SNS (Simple Notification Service):** Dịch vụ gửi thông báo tự động. Được tích hợp để gửi email cảnh báo ngay lập tức cho quản trị viên khi có bất thường xảy ra.

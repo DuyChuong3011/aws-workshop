@@ -10,7 +10,7 @@ pre: " <b> 5. </b> "
 
 Trong phần workshop này, nhóm chúng tôi sẽ hướng dẫn chi tiết cách triển khai toàn trình (end-to-end) một hệ thống Machine Learning Operations (MLOps) trên nền tảng AWS nhằm giải quyết bài toán phát hiện dị thường từ dữ liệu cảm biến SCADA.
 
-Kiến trúc của dự án thay thế các thao tác thủ công bằng việc tự động hóa toàn bộ vòng đời học máy: từ việc thiết lập không gian lưu trữ dữ liệu (Data Lake), phân quyền bảo mật, huấn luyện mô hình XGBoost (xử lý mất cân bằng nhãn), cho đến việc tối ưu hóa siêu tham số (HPO) và quản lý phiên bản mô hình trên đám mây.
+Kiến trúc của dự án thay thế các thao tác thủ công bằng việc tự động hóa vòng đời học máy: từ việc thiết lập lưu trữ dữ liệu (Amazon S3), phân quyền bảo mật (AWS IAM), huấn luyện và quản lý mô hình (Amazon SageMaker), cho đến việc giám sát (Amazon CloudWatch) và thiết lập cảnh báo tự động (Amazon SNS).
 
 #### Nội dung
 
